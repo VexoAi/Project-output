@@ -1,0 +1,1196 @@
+/* ======================================================
+   SMART TEACHER CHARACTER INTERACTIVE APPLICATION STYLES
+   ====================================================== */
+
+:root {
+    --bg-dark: #0b0d14;
+    --bg-card: rgba(22, 26, 38, 0.75);
+    --bg-card-hover: rgba(30, 36, 54, 0.85);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-accent: rgba(0, 229, 255, 0.3);
+    
+    --primary-cyan: #00e5ff;
+    --primary-indigo: #6366f1;
+    --accent-gold: #fbbf24;
+    --accent-emerald: #10b981;
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    
+    --shadow-glow: 0 0 25px rgba(0, 229, 255, 0.2);
+    --glass-blur: blur(16px);
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(15, 17, 26, 0.8) 0%, #0b0d14 100%);
+    background-attachment: fixed;
+}
+
+/* ======================================================
+   HEADER OVERLAY
+   ====================================================== */
+
+#header-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: rgba(11, 13, 20, 0.8);
+    backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.live-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 229, 255, 0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-accent);
+}
+
+.live-dot {
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--primary-cyan);
+    animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.live-text {
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+.version-tag {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.gesture-badge, .equipped-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+.badge-label {
+    color: var(--text-muted);
+}
+
+.badge-value {
+    color: var(--primary-cyan);
+    font-weight: 600;
+}
+
+/* ======================================================
+   MAIN LAYOUT & STAGE
+   ====================================================== */
+
+#app-container {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    height: calc(100vh - 64px);
+    margin-top: 64px;
+    overflow: hidden;
+}
+
+#stage-viewport {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #1b2033 0%, #0d101a 80%);
+    overflow: hidden;
+}
+
+/* Classroom Grid Floor Effect */
+#stage-viewport::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 35%;
+    background: linear-gradient(0deg, rgba(0, 229, 255, 0.05) 0%, transparent 100%),
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 40px);
+    perspective: 500px;
+    transform: rotateX(60deg);
+    transform-origin: bottom center;
+}
+
+/* Stage & Classroom Environment */
+#stage-viewport {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 30%, #1e2638 0%, #0d101a 85%);
+    overflow: hidden;
+}
+
+/* Classroom Wall Spotlight & Wall Decor */
+#stage-viewport::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(180deg, rgba(0, 229, 255, 0.04) 0%, transparent 100%),
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 2px, transparent 2px, transparent 80px);
+    pointer-events: none;
+}
+
+/* Interactive Classroom Whiteboard */
+.whiteboard-container {
+    position: absolute;
+    top: 20px;
+    left: 290px;
+    right: 25px;
+    width: auto;
+    max-width: none;
+    height: calc(100% - 105px);
+    max-height: 560px;
+    background: linear-gradient(135deg, rgba(9, 14, 23, 0.96) 0%, rgba(13, 21, 39, 0.96) 100%);
+    border: 7px solid #1e293b;
+    border-radius: 18px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 229, 255, 0.2), inset 0 0 40px rgba(0, 0, 0, 0.85);
+    z-index: 5;
+    padding: 22px 26px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(40px) scale(0.96);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Whiteboard Bottom Marker Tray */
+.whiteboard-container::after {
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 12%;
+    right: 12%;
+    height: 9px;
+    background: linear-gradient(90deg, #475569, #94a3b8, #475569);
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.whiteboard-container.visible-board {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) scale(1);
+}
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+.board-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--primary-cyan);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.board-topic {
+    font-size: 0.92rem;
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+.board-content {
+    color: #e2e8f0;
+    font-size: 0.96rem;
+    line-height: 1.6;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.board-content h3 {
+    color: var(--primary-cyan);
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.board-content ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.board-content li {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    transition: all 0.3s ease;
+}
+
+.board-content li:hover {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: rgba(0, 229, 255, 0.3);
+}
+
+/* Active item being read by teacher */
+.board-content li.reading-active-item,
+.board-content p.reading-active-item {
+    background: rgba(0, 229, 255, 0.22) !important;
+    border-color: var(--primary-cyan) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.45), inset 0 0 12px rgba(0, 229, 255, 0.25) !important;
+    transform: scale(1.04);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Character Container */
+.character-wrapper {
+    position: absolute;
+    left: 10px;
+    right: auto;
+    bottom: 15px;
+    z-index: 10;
+    width: 270px;
+    height: 510px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+    transition: transform 0.6s cubic-bezier(0.34, 1.25, 0.64, 1), right 0.6s cubic-bezier(0.34, 1.25, 0.64, 1), left 0.6s cubic-bezier(0.34, 1.25, 0.64, 1);
+    transform-origin: bottom center;
+    overflow: visible;
+}
+
+/* SVG Character Parts Animation classes */
+.teacher-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible !important;
+}
+
+.teacher-part {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Floating animation for Idle */
+@keyframes idleFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+}
+
+.character-wrapper.idle-anim {
+    animation: idleFloat 4s ease-in-out infinite;
+}
+
+/* Waving animation */
+@keyframes armWave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(18deg); }
+    75% { transform: rotate(-10deg); }
+}
+
+.wave-active #right-arm {
+    transform-origin: 315px 240px;
+    animation: armWave 1s ease-in-out infinite;
+}
+
+/* Writing animation */
+@keyframes writeMotion {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-8px, -6px) rotate(-4deg); }
+    50% { transform: translate(-14px, 2px) rotate(3deg); }
+    75% { transform: translate(-6px, -4px) rotate(-2deg); }
+}
+
+.writing-active #right-arm {
+    transform-origin: 315px 240px;
+    animation: writeMotion 0.9s ease-in-out infinite;
+}
+
+/* Flexible, Realistic Classroom Teaching Hand & Pointer Animation */
+@keyframes flexibleTeachingGesture {
+    0%, 100% {
+        transform: rotate(0deg) translate(0, 0);
+    }
+    18% {
+        /* Smoothly articulates arm to point at the first topic/point */
+        transform: rotate(6deg) translate(4px, 12px);
+    }
+    32% {
+        /* Subtle teaching emphasis tap */
+        transform: rotate(4deg) translate(7px, 9px);
+    }
+    54% {
+        /* Sweeps smoothly across to second bullet point */
+        transform: rotate(12deg) translate(5px, 24px);
+    }
+    72% {
+        /* Smoothly gestures upwards towards lesson header */
+        transform: rotate(-3deg) translate(-3px, -6px);
+    }
+    88% {
+        /* Natural resting posture */
+        transform: rotate(1deg) translate(1px, 2px);
+    }
+}
+
+/* Subtle wrist & pointer stick flex */
+@keyframes stickFlexMicro {
+    0%, 100% {
+        transform: translate(440px, 210px) rotate(-8deg);
+    }
+    18% {
+        transform: translate(440px, 210px) rotate(-5deg);
+    }
+    54% {
+        transform: translate(440px, 210px) rotate(-11deg);
+    }
+    72% {
+        transform: translate(440px, 210px) rotate(-6deg);
+    }
+}
+
+/* Subtle natural teacher posture breathing */
+@keyframes teacherBodyBreathing {
+    0%, 100% { transform: scale(0.96) translateY(0px); }
+    50% { transform: scale(0.96) translateY(-3px); }
+}
+
+.character-wrapper.teaching-board-active {
+    left: 160px;
+    right: auto;
+    bottom: 20px;
+    animation: teacherBodyBreathing 4s ease-in-out infinite;
+}
+
+.character-wrapper.teaching-board-active #pointer-arm-group {
+    transform-origin: 310px 230px;
+    animation: flexibleTeachingGesture 5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.character-wrapper.teaching-board-active #pointer-stick-element {
+    transform-origin: 0px 0px;
+    animation: stickFlexMicro 5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+/* Natural Human Conversational Talking Gestures */
+@keyframes humanTalkingArmLeft {
+    0%, 100% { transform: rotate(0deg) translate(0, 0); }
+    25% { transform: rotate(-6deg) translateY(-5px); }
+    50% { transform: rotate(4deg) translateY(3px); }
+    75% { transform: rotate(-3deg) translateY(-2px); }
+}
+
+@keyframes humanTalkingArmRight {
+    0%, 100% { transform: rotate(0deg) translate(0, 0); }
+    30% { transform: rotate(8deg) translateY(-6px); }
+    60% { transform: rotate(-5deg) translateY(4px); }
+    85% { transform: rotate(4deg) translateY(-2px); }
+}
+
+.character-wrapper.presenting-frontal-active {
+    left: 10px;
+    right: auto;
+    bottom: 15px;
+    transform: scale(1.0);
+}
+
+.character-wrapper.presenting-frontal-active #left-arm {
+    transform-origin: 185px 240px;
+    animation: humanTalkingArmLeft 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.character-wrapper.presenting-frontal-active #right-arm {
+    transform-origin: 315px 240px;
+    animation: humanTalkingArmRight 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.character-wrapper.writing-active {
+    left: 130px;
+    right: auto;
+    transform: perspective(900px) rotateY(18deg);
+}
+
+/* Desk Overlay */
+.desk-container {
+    position: absolute;
+    bottom: 15px;
+    left: 145px;
+    transform: translateX(-50%);
+    z-index: 15;
+    pointer-events: none;
+    transition: opacity var(--transition-smooth);
+}
+
+.desk-container.hidden {
+    display: none !important;
+}
+
+/* Accessories Grid */
+.accessories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+
+.obj-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 8px 6px;
+    font-size: 0.76rem;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.obj-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-cyan);
+}
+
+.obj-btn.equipped {
+    background: rgba(0, 229, 255, 0.2);
+    border-color: var(--primary-cyan);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+}
+
+.obj-btn.reset-obj-btn {
+    grid-column: span 2;
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    font-weight: 600;
+}
+
+.obj-btn.reset-obj-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+    border-color: #ef4444;
+    color: #ffffff;
+}
+
+/* ======================================================
+   SIDEBAR & CONTROL CARDS
+   ====================================================== */
+
+#control-sidebar {
+    background: rgba(13, 16, 26, 0.9);
+    backdrop-filter: var(--glass-blur);
+    border-left: 1px solid var(--border-color);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+#control-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+#control-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+.panel-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    transition: var(--transition-fast);
+}
+
+.panel-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-accent);
+}
+
+.card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-subtext {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+/* Floating Bottom-Center Voice & Text Control Bar */
+.floating-command-bar {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 229, 255, 0.28);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 229, 255, 0.18);
+    border-radius: 50px;
+    padding: 7px 16px 7px 8px;
+    transition: all 0.3s ease;
+}
+
+.floating-command-bar:hover,
+.floating-command-bar:focus-within {
+    border-color: var(--primary-cyan);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 25px rgba(0, 229, 255, 0.35);
+}
+
+.floating-mic-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-cyan), #0284c7);
+    border: none;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+    outline: none;
+}
+
+.floating-mic-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(0, 229, 255, 0.6);
+}
+
+.floating-stop-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: none;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+    outline: none;
+    font-size: 1.1rem;
+}
+
+.floating-stop-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 22px rgba(239, 68, 68, 0.7);
+    background: linear-gradient(135deg, #f87171, #b91c1c);
+}
+
+.floating-stop-btn:active {
+    transform: scale(0.94);
+}
+
+.sidebar-stop-btn {
+    width: 100%;
+    padding: 11px 16px;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(185, 28, 28, 0.3) 100%);
+    border: 1.5px solid #ef4444;
+    border-radius: var(--radius-sm);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.86rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.25);
+    transition: all 0.25s ease;
+    margin-bottom: 4px;
+}
+
+.sidebar-stop-btn:hover {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+    transform: translateY(-2px);
+}
+
+.sidebar-stop-btn:active {
+    transform: translateY(0);
+}
+
+.speech-transcript {
+    position: absolute;
+    bottom: 58px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid var(--primary-cyan);
+    color: #e2e8f0;
+    font-size: 0.82rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 229, 255, 0.3);
+    white-space: nowrap;
+    max-width: 450px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    z-index: 60;
+    animation: slideFadeIn 0.2s ease-out;
+}
+
+.floating-mic-btn.listening {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
+    animation: micPulse 1.2s infinite;
+}
+
+@keyframes micPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.floating-input-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.floating-input-form input {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 25px;
+    padding: 8px 16px;
+    color: #ffffff;
+    font-size: 0.88rem;
+    width: 250px;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+.floating-input-form input:focus {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: var(--primary-cyan);
+    width: 300px;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+}
+
+.floating-send-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.18);
+    border: 1px solid var(--primary-cyan);
+    color: var(--primary-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.floating-send-btn:hover {
+    background: var(--primary-cyan);
+    color: #0b1120;
+    transform: scale(1.08);
+}
+
+.floating-speech-status {
+    font-size: 0.78rem;
+    color: var(--primary-cyan);
+    font-weight: 500;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 4px;
+}
+
+.reset-obj-btn {
+    grid-column: span 2;
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    flex-direction: row;
+    justify-content: center;
+    gap: 6px;
+}
+
+.reset-obj-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+}
+
+/* Poses Grid */
+.poses-grid, .expressions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.pose-btn, .expr-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 8px 6px;
+    font-size: 0.76rem;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.pose-btn:hover, .expr-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-cyan);
+}
+
+.pose-btn.active, .expr-btn.active {
+    background: var(--primary-indigo);
+    border-color: var(--primary-indigo);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Guide List */
+.guide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.guide-item {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cmd-trigger {
+    color: var(--primary-cyan);
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.cmd-desc {
+    color: var(--text-muted);
+    font-size: 0.73rem;
+}
+
+/* Lessons Grid & Curriculum Chips */
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 7px;
+}
+
+.lesson-chip-btn {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 9px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+    color: var(--text-main);
+}
+
+.lesson-chip-btn:hover {
+    background: rgba(0, 229, 255, 0.12);
+    border-color: var(--primary-cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
+}
+
+.lesson-chip-icon {
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.lesson-chip-text {
+    font-size: 0.76rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.project-special-chip {
+    grid-column: span 2;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(0, 229, 255, 0.2) 100%);
+    border: 1px solid var(--primary-cyan);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
+}
+
+.project-special-chip:hover {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(0, 229, 255, 0.35) 100%);
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.5);
+}
+
+.project-special-chip .lesson-chip-text {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+/* VoxSim AI Whiteboard Presentation Styling */
+.voxsim-presentation-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.voxsim-hero-banner {
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 12px;
+    padding: 12px 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.voxsim-badge {
+    display: inline-block;
+    background: rgba(0, 229, 255, 0.2);
+    color: var(--primary-cyan);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 229, 255, 0.4);
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+}
+
+.voxsim-heading {
+    font-size: 1.15rem;
+    color: #ffffff;
+    margin: 2px 0 4px 0;
+    font-weight: 700;
+}
+
+.voxsim-tagline {
+    font-size: 0.84rem;
+    color: var(--accent-gold);
+    font-style: italic;
+    margin: 0;
+}
+
+/* 5-Step Architecture Pipeline Bar */
+.voxsim-pipeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 8px 12px;
+    gap: 4px;
+}
+
+.voxsim-step-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+}
+
+.vstep-icon {
+    font-size: 1.1rem;
+}
+
+.vstep-label {
+    font-size: 0.72rem;
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+.vstep-arrow {
+    color: var(--primary-cyan);
+    font-size: 0.85rem;
+    opacity: 0.6;
+}
+
+.voxsim-step-node.vstep-active {
+    background: rgba(0, 229, 255, 0.25) !important;
+    border-color: var(--primary-cyan) !important;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.5) !important;
+    transform: scale(1.08);
+}
+
+.voxsim-step-node.vstep-active .vstep-label {
+    color: #ffffff;
+}
+
+/* VoxSim Features Grid */
+.voxsim-features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.voxsim-feature-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 10px 12px;
+    transition: all 0.3s ease;
+}
+
+.vcard-header {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--primary-cyan);
+    margin-bottom: 4px;
+}
+
+.vcard-body {
+    font-size: 0.76rem;
+    color: #cbd5e1;
+    line-height: 1.45;
+}
+
+.voxsim-feature-card.vcard-active {
+    background: rgba(0, 229, 255, 0.2) !important;
+    border-color: var(--primary-cyan) !important;
+    box-shadow: 0 0 18px rgba(0, 229, 255, 0.4) !important;
+    transform: scale(1.03);
+}
+
+.voxsim-feature-card.vcard-active .vcard-header {
+    color: #ffffff;
+}
+
+/* Dynamic Slide Card Presentation with Fade Transitions */
+.active-point-presentation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 160px;
+    position: relative;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.slide-counter-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 12px;
+    background: rgba(0, 229, 255, 0.15);
+    border: 1px solid var(--primary-cyan);
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--primary-cyan);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.active-slide-card {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1.5px solid var(--primary-cyan);
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.35), inset 0 0 15px rgba(0, 229, 255, 0.08);
+    border-radius: 14px;
+    padding: 18px 22px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.active-slide-text {
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Fade Transitions */
+@keyframes slideFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideFadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.97);
+    }
+}
+
+.slide-fade-in {
+    animation: slideFadeIn 0.32s cubic-bezier(0.34, 1.25, 0.64, 1) forwards;
+}
+
+.slide-fade-out {
+    animation: slideFadeOut 0.24s ease-out forwards;
+}
+
+/* Progressive Revelation Animations for Whiteboard Content */
+@keyframes boardItemPopIn {
+    0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.board-item-revealed {
+    display: list-item !important;
+    animation: boardItemPopIn 0.45s cubic-bezier(0.34, 1.25, 0.64, 1) forwards;
+}
+
+div.board-item-revealed {
+    display: block !important;
+    animation: boardItemPopIn 0.45s cubic-bezier(0.34, 1.25, 0.64, 1) forwards;
+}
+
+.voxsim-step-node.board-item-revealed {
+    display: flex !important;
+    animation: boardItemPopIn 0.45s cubic-bezier(0.34, 1.25, 0.64, 1) forwards;
+}
+
+.voxsim-pipeline-container.board-item-revealed {
+    display: flex !important;
+    animation: boardItemPopIn 0.45s cubic-bezier(0.34, 1.25, 0.64, 1) forwards;
+}
+
+.voxsim-feature-card.board-item-revealed {
+    display: block !important;
+    animation: boardItemPopIn 0.45s cubic-bezier(0.34, 1.25, 0.64, 1) forwards;
+}
+
+.board-item-hidden {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    #app-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+        height: auto;
+    }
+    #control-sidebar {
+        border-left: none;
+        border-top: 1px solid var(--border-color);
+    }
+}
