@@ -3,241 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Teacher Interactive Voice AI Character</title>
-    <meta name="description" content="Interactive 2D Smart Teacher Character with Voice Commands, Accessories, and Dynamic Poses">
+    <title>AI Smart Classroom — Universal 2D Physics Animation Generator</title>
+    <meta name="description" content="Instant 2D Physics Animation Generator featuring G.One and Ra.One across 18+ Physics Curriculum topics with 30s extended lessons and dedicated backgrounds.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Bungee&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-    <!-- Header Overlay -->
-    <header id="header-overlay">
-        <div class="brand">
-            <div class="live-status">
-                <span class="live-dot"></span>
-                <span class="live-text">SMART TEACHER AI</span>
+    <!-- Main Container -->
+    <div id="app-wrapper">
+
+        <!-- Top Header Bar -->
+        <header id="top-navbar">
+            <div class="brand-container">
+                <div class="ai-pulse-badge">
+                    <span class="live-dot pulse"></span>
+                    <span class="brand-title">UNIVERSAL 2D PHYSICS ENGINE</span>
+                </div>
+                <span class="brand-subtitle">Voice-Triggered 2D Animation Generator • 18+ Physics Topics (30s Lessons)</span>
             </div>
-            <span class="version-tag">v2.0 • Interactive Vector Engine</span>
-        </div>
 
-        <div id="activeGesture" class="gesture-badge">
-            <span class="badge-label">Active State:</span>
-            <span id="currentGestureName" class="badge-value">IDLE 🧍</span>
-        </div>
+            <!-- Current AI Status & Scene Pill -->
+            <div class="header-center-info">
+                <div id="aiStateBadge" class="status-pill status-ready">
+                    <span class="pill-icon">⚡</span>
+                    <span id="aiStateText" class="pill-text">AI Ready — Awaiting Voice Command</span>
+                </div>
+                <div id="currentSceneBadge" class="status-pill scene-pill">
+                    <span class="pill-icon">🎬</span>
+                    <span id="currentSceneName" class="pill-text">Welcome to the World of Physics</span>
+                </div>
+            </div>
 
-        <div class="equipped-summary" id="equippedSummary">
-            <span class="badge-label">Objects Equipped:</span>
-            <span id="equippedObjectsList" class="badge-value">None</span>
-        </div>
-    </header>
+            <!-- Header Quick Action Buttons -->
+            <div class="header-actions">
+                <button id="headerStopBtn" class="header-btn stop-action-btn" title="Stop Action Immediately (Esc)">
+                    <span class="btn-icon">⏹️</span>
+                    <span class="btn-text">STOP ACTION</span>
+                </button>
+                <button id="recordVideoBtn" class="header-btn record-btn" title="Export current 2D animation as high-definition video">
+                    <span class="btn-icon">🎥</span>
+                    <span class="btn-text">Export Video</span>
+                </button>
+                <button id="fullscreenBtn" class="header-btn" title="Toggle Fullscreen Smart Board">
+                    <span class="btn-icon">⛶</span>
+                </button>
+            </div>
+        </header>
 
-    <!-- Main Stage Area -->
-    <main id="app-container">
-        <!-- Interactive Stage Background & Whiteboard -->
-        <div id="stage-viewport">
+        <!-- Main Workspace Grid -->
+        <main id="workspace-grid">
 
-            <!-- Interactive Classroom Whiteboard -->
-            <div id="whiteboard" class="whiteboard-container">
-                <div class="board-frame">
-                    <div class="board-header">
-                        <span class="board-title">💡 TEACHER'S BOARD</span>
-                        <span id="boardTopic" class="board-topic">Topic: Interactive Classroom</span>
+            <!-- Center Stage: 2D Smart Board Canvas Viewport -->
+            <section id="stage-section">
+                <div id="smartboard-frame" class="smartboard-bezel">
+                    
+                    <!-- 2D Canvas Container -->
+                    <div id="canvas3d-container">
+                        <canvas id="physicsCanvas2D"></canvas>
                     </div>
-                    <div id="boardContent" class="board-content">
-                        <div class="empty-board-placeholder">
-                            <!-- Clean empty board background, ready for teacher instructions -->
+
+                    <!-- Holographic Vector & Title Overlay -->
+                    <div id="holographic-overlay" class="hologram-layer">
+                        <div class="holo-border"></div>
+                        <div id="holoTopicTitle" class="holo-title">WELCOME TO THE WORLD OF PHYSICS</div>
+                        <div id="holoConceptSubtitle" class="holo-subtitle">SPEAK OR SELECT ANY TOPIC BELOW TO GENERATE 2D ANIMATIONS</div>
+                    </div>
+
+                    <!-- Level Badge Overlay (Compact Top Right) -->
+                    <div id="level-badge-overlay" class="level-indicator">
+                        <span id="levelLabel">LVL 1 • 30s</span>
+                        <div class="power-bar-track">
+                            <div class="power-bar-fill" id="powerBarFill"></div>
+                        </div>
+                    </div>
+
+                    <!-- Welcome Entrance Hero Card -->
+                    <div id="welcome-hero-banner" class="welcome-hero-overlay">
+                        <div class="welcome-hero-card">
+                            <div class="hero-sparkle-row">⚡ ⚛️ 🚀 🧲 🌈 🍎 🌊 🏆</div>
+                            <h1 class="welcome-hero-title">WELCOME TO THE WORLD OF PHYSICS!</h1>
+                            <p class="welcome-hero-subtitle">18+ Action-Packed 30-Second 2D Physics Animations Featuring G.One & Ra.One</p>
+                            <div class="welcome-quick-hints">
+                                <span class="hint-tag">🎙️ "Explain Gravity"</span>
+                                <span class="hint-tag">🎙️ "Newton's Laws"</span>
+                                <span class="hint-tag">🎙️ "Electricity & Circuits"</span>
+                                <span class="hint-tag">🎙️ "Archimedes Buoyancy"</span>
+                            </div>
+                            <button id="startExploringBtn" class="hero-start-btn">⚡ Explore Physics Lessons</button>
+                        </div>
+                    </div>
+
+                    <!-- Celebratory Grand Finale Banner -->
+                    <div id="victory-banner" class="victory-banner-overlay hidden">
+                        <div class="victory-card">
+                            <div class="trophy-sparkle">💙 ⚡ 🏆 💥</div>
+                            <h2 class="victory-title" id="victoryTitleText">PHYSICS LAW MASTERED!</h2>
+                            <p class="victory-quote" id="victoryQuoteText">"An object at rest stays at rest, and an object in motion continues moving unless an external force acts on it!"</p>
+                            <div class="victory-stats">
+                                <span class="stat-tag">⚡ Formula Verified</span>
+                                <span class="stat-tag">🎯 30s Master Lesson</span>
+                                <span class="stat-tag">💥 2D Cel-Shaded</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Video Playback & Timeline Controls -->
+                <div id="playback-bar" class="timeline-bar">
+                    <button id="timelineStopBtn" class="control-btn timeline-stop-btn" title="Stop Action Immediately (Esc)">
+                        <span>⏹️</span>
+                    </button>
+                    <button id="playPauseBtn" class="play-btn" title="Play/Pause Storyboard">
+                        <span id="playPauseIcon">▶</span>
+                    </button>
+                    <button id="replayBtn" class="control-btn" title="Replay Storyboard from Beginning">
+                        <span>↺</span>
+                    </button>
+                    
+                    <!-- Progress Scrubber -->
+                    <div class="timeline-track-container">
+                        <div id="timelineProgress" class="timeline-progress-fill"></div>
+                        <input type="range" id="timelineScrubber" min="0" max="100" value="0" step="0.1" aria-label="Storyboard Timeline Scrubber">
+                    </div>
+
+                    <div id="timeDisplay" class="time-readout">00:00 / 00:30.0</div>
+
+                    <!-- Scene Step Indicators & Quiz Trigger -->
+                    <div class="scene-steppers">
+                        <button class="scene-step-btn active" data-step="1" title="Part 1: Setup & Concept (0-10s)">1. Setup (0-10s) 🎬</button>
+                        <button class="scene-step-btn" data-step="2" title="Part 2: Slapstick Action & Vectors (10-20s)">2. Action (10-20s) 💥</button>
+                        <button class="scene-step-btn" data-step="3" title="Part 3: Formula & Resolution (20-30s)">3. Victory (20-30s) 🏆</button>
+                        <button id="openQuizBtn" class="quiz-trigger-btn" title="Take Topic Quiz (1-2 Qs)">🧠 Quiz (2 Qs)</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Sidebar: Teacher Voice Assistant & Curriculum Selector -->
+            <aside id="sidebar-section">
+
+                <!-- Emergency Stop Card -->
+                <div class="sidebar-card emergency-stop-card">
+                    <button id="sidebarBigStopBtn" class="big-stop-action-btn" title="Stop All Actions Immediately (Esc)">
+                        <span class="stop-icon">⏹️</span>
+                        <span class="stop-title">STOP ACTION IMMEDIATELY</span>
+                        <span class="stop-shortcut">(Esc Key)</span>
+                    </button>
+                </div>
+
+                <!-- Live Voice Hearing HUD -->
+                <div class="sidebar-card voice-hud-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎙️</span>
+                        <h2 class="card-heading">Live Teacher Audio Stream</h2>
+                        <span id="micLiveBadge" class="live-pill">OFFLINE</span>
+                    </div>
+
+                    <div class="voice-mic-panel">
+                        <div class="pulse-ring-wrapper">
+                            <div class="mic-pulse-ring ring-1"></div>
+                            <div class="mic-pulse-ring ring-2"></div>
+                            <button id="micToggleBtn" class="big-mic-btn" title="Click or Press Spacebar to Toggle Live Voice Hearing">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                    <line x1="12" y1="19" x2="12" y2="22"></line>
+                                    <line x1="8" y1="22" x2="16" y2="22"></line>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Real-time Voice Audio Visualizer Canvas -->
+                        <canvas id="voiceVisualizerCanvas" width="220" height="40"></canvas>
+                    </div>
+
+                    <!-- Live Hearing Transcript Box -->
+                    <div class="transcript-box">
+                        <span class="transcript-label">Live Audio Stream:</span>
+                        <div id="liveTranscriptText" class="transcript-content">"Say any topic like 'Gravity', 'Buoyancy', 'Pascal's Law', 'Electricity', 'Pendulum'..."</div>
+                    </div>
+
+                    <!-- Custom Prompt & Manual Trigger Form -->
+                    <form id="customTopicForm" class="topic-input-form">
+                        <input type="text" id="topicInput" placeholder="Speak or type any Physics topic..." autocomplete="off">
+                        <button type="submit" id="generateTopicBtn" class="topic-submit-btn" title="Generate 2D Animation Instantly">
+                            <span>⚡ Generate</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- 18+ Physics Curriculum Topics Grid -->
+                <div class="sidebar-card presets-card">
+                    <div class="card-header">
+                        <span class="card-icon">📚</span>
+                        <h2 class="card-heading">18+ Physics Curriculum Topics (30s)</h2>
+                    </div>
+                    <div class="presets-grid-scroll">
+                        <button class="topic-chip" data-topic="inertia">
+                            <span class="chip-emoji">🧱</span>
+                            <div class="chip-info">
+                                <span class="chip-title">1. Law of Inertia</span>
+                                <span class="chip-tag">Newton 1st • Glacier Ice</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="fma">
+                            <span class="chip-emoji">📊</span>
+                            <div class="chip-info">
+                                <span class="chip-title">2. Force F = ma</span>
+                                <span class="chip-tag">Newton 2nd • Rocket Pad</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="action">
+                            <span class="chip-emoji">💥</span>
+                            <div class="chip-info">
+                                <span class="chip-title">3. Action & Reaction</span>
+                                <span class="chip-tag">Newton 3rd • Sci-Fi Arena</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="gravity">
+                            <span class="chip-emoji">🍎</span>
+                            <div class="chip-info">
+                                <span class="chip-title">4. Gravity & Free Fall</span>
+                                <span class="chip-tag">g = 9.8 m/s² • Galileo Tower</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="momentum">
+                            <span class="chip-emoji">🎱</span>
+                            <div class="chip-info">
+                                <span class="chip-title">5. Momentum (p = mv)</span>
+                                <span class="chip-tag">Conservation • Skatepark</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="energy">
+                            <span class="chip-emoji">🎢</span>
+                            <div class="chip-info">
+                                <span class="chip-title">6. Work & Energy</span>
+                                <span class="chip-tag">KE = ½mv² • Rollercoaster</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="friction">
+                            <span class="chip-emoji">🛑</span>
+                            <div class="chip-info">
+                                <span class="chip-title">7. Friction & Drag</span>
+                                <span class="chip-tag">F_frict = μN • 3 Terrains</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="electricity">
+                            <span class="chip-emoji">⚡</span>
+                            <div class="chip-info">
+                                <span class="chip-title">8. Electricity & Circuits</span>
+                                <span class="chip-tag">Ohm's Law • PCB Board</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="magnetism">
+                            <span class="chip-emoji">🧲</span>
+                            <div class="chip-info">
+                                <span class="chip-title">9. Magnetism</span>
+                                <span class="chip-tag">Poles • Magnetic Observatory</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="doppler">
+                            <span class="chip-emoji">🔊</span>
+                            <div class="chip-info">
+                                <span class="chip-title">10. Doppler Effect</span>
+                                <span class="chip-tag">Sound Waves • City Street</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="light">
+                            <span class="chip-emoji">🌈</span>
+                            <div class="chip-info">
+                                <span class="chip-title">11. Light & Refraction</span>
+                                <span class="chip-tag">Prism • Optics Darkroom</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="centripetal">
+                            <span class="chip-emoji">🔄</span>
+                            <div class="chip-info">
+                                <span class="chip-title">12. Centripetal Force</span>
+                                <span class="chip-tag">Fc = mv²/r • Loop Arena</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="buoyancy">
+                            <span class="chip-emoji">🌊</span>
+                            <div class="chip-info">
+                                <span class="chip-title">13. Archimedes Buoyancy</span>
+                                <span class="chip-tag">Fb = ρVg • Ocean Tank</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="pendulum">
+                            <span class="chip-emoji">⏰</span>
+                            <div class="chip-info">
+                                <span class="chip-title">14. Simple Pendulum</span>
+                                <span class="chip-tag">T = 2π√(L/g) • Clock Tower</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="pascal">
+                            <span class="chip-emoji">🚜</span>
+                            <div class="chip-info">
+                                <span class="chip-title">15. Pascal's Law</span>
+                                <span class="chip-tag">P = F/A • Hydraulic Garage</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="thermal">
+                            <span class="chip-emoji">🔥</span>
+                            <div class="chip-info">
+                                <span class="chip-title">16. Thermodynamics</span>
+                                <span class="chip-tag">Q = mcΔT • Thermal Lab</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="interference">
+                            <span class="chip-emoji">〰️</span>
+                            <div class="chip-info">
+                                <span class="chip-title">17. Wave Interference</span>
+                                <span class="chip-tag">Double Slit • Ripple Tank</span>
+                            </div>
+                        </button>
+
+                        <button class="topic-chip" data-topic="nuclear">
+                            <span class="chip-emoji">⚛️</span>
+                            <div class="chip-info">
+                                <span class="chip-title">18. Nuclear Energy</span>
+                                <span class="chip-tag">E = mc² • Quantum Tokamak</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2D Cast Info -->
+                <div class="sidebar-card cast-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎭</span>
+                        <h2 class="card-heading">2D Cartoon Cast</h2>
+                    </div>
+                    <div class="cast-grid">
+                        <div class="cast-item">
+                            <div class="cast-avatar">💙</div>
+                            <div class="cast-meta">
+                                <span class="cast-name">2D G.One (Hero)</span>
+                                <span class="cast-role">Cyan Suit & Core</span>
+                            </div>
+                        </div>
+                        <div class="cast-item">
+                            <div class="cast-avatar">💀</div>
+                            <div class="cast-meta">
+                                <span class="cast-name">2D Ra.One (Villain)</span>
+                                <span class="cast-role">Red Suit & Skull</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Smart Teacher SVG Canvas Character Container -->
-            <div id="character-container" class="character-wrapper">
-                <!-- SVG Character will be rendered dynamically by script.js -->
-            </div>
+            </aside>
+        </main>
 
-            <!-- Desk Overlay for Table, Laptop, Plant -->
-            <div id="desk-overlay" class="desk-container hidden"></div>
+        <!-- Interactive Topic Quiz Modal Overlay -->
+        <div id="quiz-modal-overlay" class="quiz-overlay-layer hidden">
+            <div class="quiz-card">
+                <div class="quiz-header">
+                    <div class="quiz-badge-row">
+                        <span class="quiz-pill" id="quizTopicBadge">TOPIC 1 • INERTIA</span>
+                        <span class="quiz-counter" id="quizCounter">Question 1 of 2</span>
+                    </div>
+                    <button id="closeQuizBtn" class="quiz-close-btn" title="Close Quiz">&times;</button>
+                </div>
 
-            <!-- Floating Bottom-Center Voice & Text Control Bar -->
-            <div id="floating-command-bar" class="floating-command-bar">
-                <button id="micButton" class="floating-mic-btn" aria-label="Toggle Voice Command Listening" title="Click or Press Space to Speak">
-                    <svg class="mic-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
-                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                        <line x1="12" y1="19" x2="12" y2="22"></line>
-                        <line x1="8" y1="22" x2="16" y2="22"></line>
-                    </svg>
-                </button>
-                
-                <button id="stopButton" class="floating-stop-btn" aria-label="Stop Action Immediately" title="Stop Action Immediately (Esc)">
-                    ⏹️
-                </button>
-                
-                <form id="text-command-form" class="floating-input-form">
-                    <input type="text" id="commandInput" placeholder="Say or type &quot;Hi&quot; to begin..." autocomplete="off">
-                    <button type="submit" class="floating-send-btn" aria-label="Send Command" title="Send Command">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
-                    </button>
-                </form>
+                <div class="quiz-body">
+                    <h3 id="quizQuestionText" class="quiz-question-title">What is Newton's First Law also known as?</h3>
+                    <div id="quizOptionsContainer" class="quiz-options-grid">
+                        <!-- Rendered dynamically via JS -->
+                    </div>
+                    <div id="quizFeedbackBox" class="quiz-feedback-box hidden">
+                        <div id="quizFeedbackIcon" class="quiz-feedback-icon">🎉</div>
+                        <div class="quiz-feedback-text">
+                            <strong id="quizFeedbackTitle">Correct!</strong>
+                            <p id="quizFeedbackDesc">Newton's First Law describes an object's tendency to resist changes in its state of motion.</p>
+                        </div>
+                    </div>
+                </div>
 
-                <div id="speechStatus" class="floating-speech-status">Say "Hi" to start!</div>
-                <div id="speechTranscript" class="speech-transcript hidden"></div>
+                <div class="quiz-footer">
+                    <div class="quiz-score-tracker">
+                        <span id="quizScoreText">Score: 0 / 2</span>
+                    </div>
+                    <div class="quiz-actions">
+                        <button id="quizNextBtn" class="quiz-action-btn primary hidden">Next Question ➔</button>
+                        <button id="quizFinishBtn" class="quiz-action-btn victory hidden">🏆 Claim Mastery Badge</button>
+                        <button id="quizRetryBtn" class="quiz-action-btn secondary hidden">↺ Retry Quiz</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Right Control Panel Sidebar -->
-        <aside id="control-sidebar">
-
-            <!-- Emergency Stop Action Button -->
-            <button id="sidebarStopBtn" class="sidebar-stop-btn" title="Stop All Actions (Esc)">
-                <span>⏹️</span>
-                <span>STOP ACTION IMMEDIATELY</span>
-            </button>
-
-            <!-- Subject Lessons & Project Presentation Panel -->
-            <section class="panel-card lessons-card">
-                <h2 class="card-title">📚 Subject Curriculum & Projects</h2>
-                <p class="card-subtext">Click any topic to hear the teacher present on the whiteboard:</p>
-                <div class="lessons-grid">
-                    <button class="lesson-chip-btn" data-topic="newton">
-                        <span class="lesson-chip-icon">🔬</span>
-                        <span class="lesson-chip-text">Newton's 3rd Law</span>
-                    </button>
-                    <button class="lesson-chip-btn" data-topic="voice">
-                        <span class="lesson-chip-icon">📝</span>
-                        <span class="lesson-chip-text">Active & Passive Voice</span>
-                    </button>
-                    <button class="lesson-chip-btn" data-topic="siet">
-                        <span class="lesson-chip-icon">🏛️</span>
-                        <span class="lesson-chip-text">Sri Shakthi College</span>
-                    </button>
-                    <button class="lesson-chip-btn" data-topic="vijay">
-                        <span class="lesson-chip-icon">🌟</span>
-                        <span class="lesson-chip-text">TN CM Vijay Journey</span>
-                    </button>
-                    <button class="lesson-chip-btn" data-topic="ww1">
-                        <span class="lesson-chip-icon">🌍</span>
-                        <span class="lesson-chip-text">World War 1</span>
-                    </button>
-                    <button class="lesson-chip-btn" data-topic="periodic">
-                        <span class="lesson-chip-icon">🧪</span>
-                        <span class="lesson-chip-text">Periodic Table</span>
-                    </button>
-                    <button class="lesson-chip-btn" data-topic="math">
-                        <span class="lesson-chip-icon">📐</span>
-                        <span class="lesson-chip-text">Pythagoras Theorem</span>
-                    </button>
-                    <button class="lesson-chip-btn" data-topic="photosynthesis">
-                        <span class="lesson-chip-icon">🌿</span>
-                        <span class="lesson-chip-text">Photosynthesis</span>
-                    </button>
-                    <button class="lesson-chip-btn" data-topic="ai">
-                        <span class="lesson-chip-icon">🤖</span>
-                        <span class="lesson-chip-text">AI & Robotics</span>
-                    </button>
-                    <button class="lesson-chip-btn project-special-chip" data-topic="voxsim">
-                        <span class="lesson-chip-icon">⚡</span>
-                        <span class="lesson-chip-text">Our Project: VoxSim AI (SIH 2025)</span>
-                    </button>
+        <!-- Video Export Modal Overlay -->
+        <div id="exportModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3 class="modal-title">🎥 Exporting 30s 2D Physics Video</h3>
+                    <button id="closeExportModal" class="modal-close-btn">&times;</button>
                 </div>
-            </section>
-
-            <!-- Pose & Animation Presets -->
-            <section class="panel-card poses-card">
-                <h2 class="card-title">🕺 Poses & Actions</h2>
-                <div class="poses-grid">
-                    <button class="pose-btn active" data-pose="idle">🧍 Idle</button>
-                    <button class="pose-btn" data-pose="teach_board">👨‍🏫 Teacher Teaches</button>
-                    <button class="pose-btn" data-pose="talk_gestures">🎙️ Present Front</button>
-                    <button class="pose-btn" data-pose="wave">👋 Wave</button>
-                    <button class="pose-btn" data-pose="point_up">☝️ Point Up</button>
-                    <button class="pose-btn" data-pose="explain">🪄 Explain</button>
-                    <button class="pose-btn" data-pose="read">📖 Read Book</button>
-                    <button class="pose-btn" data-pose="write">🖊️ Write Board</button>
-                    <button class="pose-btn" data-pose="laptop_desk">💻 Laptop Desk</button>
-                    <button class="pose-btn" data-pose="backpack_pose">🎒 Backpack</button>
-                    <button class="pose-btn" data-pose="thumbs_up">👍 Thumbs Up</button>
-                    <button class="pose-btn" data-pose="walk">🚶 Walk</button>
+                <div class="modal-body">
+                    <div class="export-spinner-box">
+                        <div class="export-spinner"></div>
+                        <p id="exportStatusText">Recording 1080p 30-Second 2D Stream...</p>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="exportProgressBar" class="export-progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p class="export-tip">💡 Capturing G.One and Ra.One 2D slapstick physics animations and audio.</p>
                 </div>
-            </section>
-
-            <!-- Accessories & Equipment Controls -->
-            <section class="panel-card accessories-card">
-                <h2 class="card-title">🎒 Accessories & Props</h2>
-                <p class="card-subtext">Toggle props on or off to customize the teacher:</p>
-                <div class="accessories-grid">
-                    <button class="obj-btn" data-obj="book">📘 Book</button>
-                    <button class="obj-btn" data-obj="pointer">🪄 Pointer</button>
-                    <button class="obj-btn" data-obj="pen">🖊️ Pen</button>
-                    <button class="obj-btn" data-obj="backpack">🎒 Backpack</button>
-                    <button class="obj-btn" data-obj="laptop">💻 Laptop</button>
-                    <button class="obj-btn" data-obj="desk">🪑 Desk</button>
-                    <button class="obj-btn" data-obj="plant">🪴 Plant</button>
-                    <button class="obj-btn reset-obj-btn" data-obj="reset">🔄 Reset All Props</button>
+                <div class="modal-footer">
+                    <button id="cancelExportBtn" class="modal-btn secondary">Cancel</button>
+                    <a id="downloadVideoLink" class="modal-btn primary hidden" download="2d_physics_animation.webm">⬇️ Download Video</a>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Head Expressions -->
-            <section class="panel-card expressions-card">
-                <h2 class="card-title">😊 Facial Expressions</h2>
-                <div class="expressions-grid">
-                    <button class="expr-btn active" data-expr="happy">Smiling 😄</button>
-                    <button class="expr-btn" data-expr="talking">Talking 💬</button>
-                    <button class="expr-btn" data-expr="surprised">Surprised 😲</button>
-                    <button class="expr-btn" data-expr="nervous">Nervous 😅</button>
-                    <button class="expr-btn" data-expr="sad">Sad 😢</button>
-                    <button class="expr-btn" data-expr="focused">Focused 🧐</button>
-                </div>
-            </section>
+    </div>
 
-            <!-- Voice Commands Guide -->
-            <section class="panel-card guide-card">
-                <h2 class="card-title">💡 Recognized Voice Commands</h2>
-                <div class="guide-list">
-                    <div class="guide-item" style="cursor:pointer;" title="Click to test command">
-                        <span class="cmd-trigger">"Teacher Teaches" / "Teach"</span>
-                        <span class="cmd-desc">Takes book & pointer stick, turns toward board & teaches</span>
-                    </div>
-                    <div class="guide-item" style="cursor:pointer;" title="Click to test command">
-                        <span class="cmd-trigger">"Hold book and point stick"</span>
-                        <span class="cmd-desc">Equips book & pointer in explaining pose</span>
-                    </div>
-                    <div class="guide-item" style="cursor:pointer;" title="Click to test command">
-                        <span class="cmd-trigger">"Sit at desk with laptop"</span>
-                        <span class="cmd-desc">Spawns desk, laptop & sits teacher</span>
-                    </div>
-                    <div class="guide-item" style="cursor:pointer;" title="Click to test command">
-                        <span class="cmd-trigger">"Take pen and write"</span>
-                        <span class="cmd-desc">Equips pen, opens whiteboard writing pose</span>
-                    </div>
-                    <div class="guide-item" style="cursor:pointer;" title="Click to test command">
-                        <span class="cmd-trigger">"Put on backpack"</span>
-                        <span class="cmd-desc">Equips teacher backpack</span>
-                    </div>
-                    <div class="guide-item" style="cursor:pointer;" title="Click to test command">
-                        <span class="cmd-trigger">"Show plant on table"</span>
-                        <span class="cmd-desc">Spawns potted plant next to teacher</span>
-                    </div>
-                    <div class="guide-item" style="cursor:pointer;" title="Click to test command">
-                        <span class="cmd-trigger">"Explain science / math"</span>
-                        <span class="cmd-desc">Teacher presents lesson on board</span>
-                    </div>
-                    <div class="guide-item" style="cursor:pointer;" title="Click to test command">
-                        <span class="cmd-trigger">"Wave hi" / "Thumbs up"</span>
-                        <span class="cmd-desc">Friendly greetings with audio response</span>
-                    </div>
-                </div>
-            </section>
-
-        </aside>
-    </main>
-
-    <script src="./script.js"></script>
+    <!-- Main Module Script -->
+    <script type="module" src="./script.js"></script>
 </body>
 </html>
