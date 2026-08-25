@@ -1,0 +1,888 @@
+/* Specialized Styling for the 10 Biology Laboratory Modules */
+
+/* Lab Module Grid Layout */
+.lab-module-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  width: 100%;
+}
+
+.lab-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--bg-panel-border);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--bg-panel-border);
+}
+
+.panel-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pulse-icon {
+  animation: pulseIcon 2s infinite alternate;
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+
+.lab-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Canvas Containers */
+.dna-canvas-container,
+.heart-canvas-container,
+.lungs-canvas-container,
+.brain-canvas-wrap,
+.chloroplast-canvas-wrap,
+.microscope-lens-wrap,
+.petri-canvas-wrap,
+.digestive-canvas-wrap,
+.eco-canvas-wrap,
+.alveolus-canvas-wrap,
+.synapse-canvas-wrap {
+  position: relative;
+  background: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 1. DNA & Genetics Styles */
+.dna-base-legend {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.legend-chip {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--bg-panel-border);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.base-a { color: #ef4444; border-color: rgba(239, 68, 68, 0.4); }
+.base-t { color: #3b82f6; border-color: rgba(59, 130, 246, 0.4); }
+.base-c { color: #10b981; border-color: rgba(16, 185, 129, 0.4); }
+.base-g { color: #f59e0b; border-color: rgba(245, 158, 11, 0.4); }
+
+.rule-callout {
+  margin-top: 14px;
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.highlight-code {
+  font-family: var(--font-mono);
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.punnett-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.parent-selector label {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.allele-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.allele-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--bg-panel-border);
+  color: var(--text-main);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.allele-btn.active {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.allele-divider {
+  color: var(--text-muted);
+  font-weight: bold;
+}
+
+.punnett-table-wrap {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--bg-panel-border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+}
+
+.p-top-alleles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  font-weight: 800;
+  color: #38bdf8;
+  margin-left: 50px;
+  margin-bottom: 6px;
+}
+
+.p-body-row {
+  display: flex;
+}
+
+.p-left-alleles {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50px;
+  font-weight: 800;
+  color: #ec4899;
+  text-align: center;
+}
+
+.parent-label, .parent-label-left {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.punnett-2x2-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  flex: 1;
+}
+
+.punnett-cell {
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.pheno-brown {
+  background: rgba(180, 83, 9, 0.25);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.pheno-blue {
+  background: rgba(2, 132, 199, 0.25);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.genotype-tag {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.phenotype-name {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.punnett-stats {
+  margin-top: 12px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.badge-brown { color: #fbbf24; font-weight: 600; }
+.badge-blue { color: #38bdf8; font-weight: 600; }
+
+/* 2. Circulatory Styles */
+.blood-flow-legend, .gas-legend, .synapse-legend, .eco-legend {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.color-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.blue-dot { background: #38bdf8; box-shadow: 0 0 6px #38bdf8; }
+.red-dot { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+.yellow-dot { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+.green-dot { background: #10b981; box-shadow: 0 0 6px #10b981; }
+
+.heart-controls-bar, .diaphragm-control-wrap, .photo-sliders-bar, .incubator-temp-slider {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bpm-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bpm-slider-wrap label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bpm-state-tag {
+  color: #38bdf8;
+  font-size: 12px;
+}
+
+input[type="range"] {
+  accent-color: #0284c7;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.preset-buttons, .brain-parts-nav, .microbe-selector-bar, .food-selector-row, .taxonomy-grid-picker {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-sm-preset, .btn-part, .microbe-tab, .btn-food, .taxa-card-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--bg-panel-border);
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-sm-preset:hover, .btn-part:hover, .microbe-tab:hover, .btn-food:hover, .taxa-card-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.btn-part.active, .microbe-tab.active, .btn-food.active, .taxa-card-btn.active {
+  background: rgba(2, 132, 199, 0.25);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.chamber-info-card, .organelle-detail-card, .microbe-dossier-card, .stage-info-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--bg-panel-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.chamber-info-card h4, .organelle-detail-card h4, .microbe-dossier-card h4, .stage-info-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.blood-pathway-tag, .dossier-badge, .org-presence {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.path-red { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+.path-blue { background: rgba(2, 132, 199, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+
+.circulation-flow-diagram, .gas-exchange-explainer, .calvin-info-box, .cell-compare-table {
+  font-size: 12.5px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flow-step {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+}
+
+.step-blue { background: rgba(2, 132, 199, 0.15); border-left: 3px solid #38bdf8; }
+.step-red { background: rgba(239, 68, 68, 0.15); border-left: 3px solid #ef4444; }
+
+/* 3. Respiratory Pressure Gauges */
+.pressure-gauge-bar {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--bg-panel-border);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  display: flex;
+  gap: 14px;
+}
+
+/* 4. Photosynthesis Meters */
+.formula-banner {
+  position: absolute;
+  bottom: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--bg-panel-border);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.formula-badge {
+  font-family: var(--font-mono);
+}
+
+.badge-sun { color: #fbbf24; }
+.badge-sugar { color: #4ade80; }
+.badge-o2 { color: #38bdf8; }
+
+.meter-card, .nutrient-absorption-meter {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--bg-panel-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.meter-bar-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.fill-sugar { background: linear-gradient(90deg, #10b981, #34d399); }
+.fill-o2 { background: linear-gradient(90deg, #0284c7, #38bdf8); }
+.fill-digest { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+.meter-val {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* 5. Cell Structure */
+.cell-type-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--bg-panel-border);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.active-type {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+}
+
+.organelle-chip-list {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.org-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--bg-panel-border);
+  color: var(--text-muted);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.org-chip.active {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.org-fact-box {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  margin-top: 10px;
+}
+
+.cell-compare-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+}
+
+.cell-compare-table th, .cell-compare-table td {
+  padding: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: left;
+}
+
+/* 6. Microorganisms */
+.petri-hud-stats {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--bg-panel-border);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  display: flex;
+  gap: 10px;
+}
+
+.microbe-roles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.role-item {
+  display: flex;
+  gap: 8px;
+  font-size: 11.5px;
+}
+
+/* 7. Digestive Stages */
+.stage-stepper-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+  position: relative;
+}
+
+.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.step-node.active {
+  opacity: 1;
+}
+
+.step-node.completed .step-num {
+  background: #10b981;
+  border-color: #34d399;
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--bg-panel-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.step-node.active .step-num {
+  background: #0284c7;
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px #0284c7;
+}
+
+.step-name {
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.stg-badge-row {
+  display: flex;
+  gap: 6px;
+  margin: 6px 0;
+}
+
+.stg-chip {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* 8. Animal Classification */
+.taxa-card-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  min-width: 100px;
+}
+
+.taxa-icon { font-size: 24px; }
+.taxa-name { font-size: 12px; margin-top: 4px; }
+.taxa-thermo { font-size: 10px; color: var(--text-muted); }
+
+.class-dossier-inner {
+  margin-top: 14px;
+}
+
+.dossier-head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.big-icon { font-size: 38px; }
+
+.traits-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.trait-cell {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+}
+
+.specimen-pill {
+  background: rgba(2, 132, 199, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  margin-right: 4px;
+}
+
+.mystery-game-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--bg-panel-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.mystery-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.mystery-target-box {
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px dashed rgba(56, 189, 248, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.myst-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.mystery-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.myst-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--bg-panel-border);
+  color: var(--text-main);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.myst-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.mystery-feedback, .quiz-feedback-box {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.feedback-correct {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+.feedback-wrong {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+/* 9. Ecosystem & Trophic Pyramid */
+.pyramid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.trophic-tier {
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  border: 1px solid transparent;
+}
+
+.trophic-tier:hover, .trophic-tier.active-tier {
+  transform: scale(1.02);
+  border-color: #ffffff;
+}
+
+.tier-apex { width: 45%; background: rgba(239, 68, 68, 0.25); border-color: rgba(239, 68, 68, 0.5); }
+.tier-secondary { width: 65%; background: rgba(245, 158, 11, 0.25); border-color: rgba(245, 158, 11, 0.5); }
+.tier-primary { width: 82%; background: rgba(2, 132, 199, 0.25); border-color: rgba(2, 132, 199, 0.5); }
+.tier-producers { width: 100%; background: rgba(16, 185, 129, 0.25); border-color: rgba(16, 185, 129, 0.5); }
+
+.tier-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.energy-val {
+  font-family: var(--font-mono);
+  color: #fbbf24;
+}
+
+.decomposer-strip {
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.trophic-callout {
+  margin-top: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+
+/* 10. Quiz Modal */
+.quiz-modal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quiz-badge {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.quiz-xp-badge {
+  color: #fbbf24;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.quiz-question-title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-opt-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--bg-panel-border);
+  color: var(--text-main);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.quiz-opt-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.opt-letter {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.correct-answer {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: #10b981 !important;
+  color: #34d399 !important;
+}
+
+.wrong-answer {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: #ef4444 !important;
+  color: #f87171 !important;
+}
+
+.quiz-results-card {
+  text-align: center;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.results-trophy { font-size: 52px; }
+
+.earned-badge-showcase {
+  background: rgba(2, 132, 199, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 10px 0;
+}
+
+.big-badge-icon { font-size: 36px; }
+
+.badge-showcase-meta {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.results-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
