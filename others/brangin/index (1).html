@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BioProcess – 2D Animated Biology Process Video Lab</title>
+  <meta name="description" content="Watch high-definition 60 FPS animated process videos of biological mechanisms: DNA replication, cardiovascular blood flow, photosynthesis, neural action potentials, and more." />
+
+  <!-- Google Fonts & Modern Styling -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/simulations.css" />
+</head>
+
+<body>
+  <!-- Clean Sleek Top Header -->
+  <header class="app-header">
+    <div class="brand-wrap">
+      <span class="brand-icon">🧬</span>
+      <div>
+        <span class="brand-title">BioProcess</span>
+        <span class="brand-badge">Animated Process Video Lab</span>
+      </div>
+    </div>
+
+    <!-- Topic Selector Pills in Top Navigation -->
+    <nav class="topic-pills-nav" id="topic-pills-nav">
+      <!-- Injected dynamically by app.js -->
+    </nav>
+  </header>
+
+  <!-- Master Full-Screen Video Cinema Container -->
+  <main class="cinema-main-container">
+    <!-- Active Topic Process Video Player -->
+    <div class="cinema-player-card" id="cinema-player-root">
+      <!-- Injected dynamically by active topic module -->
+    </div>
+  </main>
+
+  <!-- Core Scripts -->
+  <script src="js/speech.js"></script>
+  <script src="js/character.js"></script>
+
+  <!-- Topic Animated Process Modules -->
+  <script src="js/topics/dnaGenetics.js"></script>
+  <script src="js/topics/circulatory.js"></script>
+  <script src="js/topics/respiratory.js"></script>
+  <script src="js/topics/nervous.js"></script>
+  <script src="js/topics/photosynthesis.js"></script>
+  <script src="js/topics/cellStructure.js"></script>
+  <script src="js/topics/microorganisms.js"></script>
+  <script src="js/topics/digestive.js"></script>
+  <script src="js/topics/animalClass.js"></script>
+  <script src="js/topics/ecosystem.js"></script>
+
+  <!-- App Coordinator -->
+  <script src="js/app.js"></script>
+</body>
+
+</html>

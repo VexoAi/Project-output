@@ -1,0 +1,302 @@
+/* Dr. Helix - 2D Interactive Teacher Character Styles & Rigging */
+
+.helix-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+/* 1. Speech Bubble */
+.speech-bubble-anchor {
+  width: 100%;
+  position: relative;
+  margin-bottom: 12px;
+  z-index: 10;
+}
+
+.speech-bubble {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1.5px solid rgba(56, 189, 248, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(2, 132, 199, 0.2);
+  position: relative;
+  animation: floatBubble 4s ease-in-out infinite alternate;
+}
+
+.speech-bubble.bubble-pop {
+  animation: popReveal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popReveal {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatBubble {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-4px); }
+}
+
+.speech-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px;
+}
+
+.speech-avatar-tag {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.speech-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.speech-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--bg-panel-border);
+  color: var(--text-main);
+  border-radius: 4px;
+  width: 26px;
+  height: 24px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.speech-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.speech-btn.muted {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.speech-text {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+.speech-tail {
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid rgba(15, 23, 42, 0.92);
+}
+
+/* 2. Character SVG Canvas & Rigging */
+.helix-avatar-svg-container {
+  width: 100%;
+  max-width: 260px;
+  cursor: pointer;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.4));
+  transition: transform 0.2s ease;
+}
+
+.helix-avatar-svg-container:hover {
+  transform: scale(1.02);
+}
+
+.helix-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Idle Breathing / Floating Animation */
+.helix-body-group {
+  transform-origin: 160px 380px;
+  animation: helixIdle 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes helixIdle {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(0.4deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Head Tilt Animation */
+.helix-head-group {
+  transform-origin: 160px 170px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Eye Blinking */
+.eyelid-top {
+  opacity: 0;
+  transition: opacity 0.05s ease;
+}
+
+.helix-wrapper.blinking .eyelid-top {
+  opacity: 1;
+}
+
+/* Eye Pupils */
+.helix-pupil {
+  transition: transform 0.08s ease-out;
+}
+
+/* Mouth Shapes Switching */
+.mouth-shape {
+  display: none;
+}
+
+/* Default mouth (neutral smile) */
+.helix-mouth .mouth-neutral {
+  display: block;
+}
+
+/* Mouth flap during speech */
+.helix-mouth.talking-state-0 .mouth-neutral { display: block; }
+.helix-mouth.talking-state-1 .mouth-talk-1 { display: block; }
+.helix-mouth.talking-state-1 .mouth-neutral { display: none; }
+.helix-mouth.talking-state-2 .mouth-talk-2 { display: block; }
+.helix-mouth.talking-state-2 .mouth-neutral { display: none; }
+
+/* Finger Sparkle Pulse */
+.finger-sparkle {
+  animation: sparkleGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes sparkleGlow {
+  0% { r: 3.5px; opacity: 0.6; }
+  100% { r: 6.5px; opacity: 1; }
+}
+
+/* Arm Poses Display Control */
+.arm-pose-explaining { display: block; }
+.arm-pose-celebrating { display: none; }
+.arm-pose-thinking { display: none; }
+
+/* 3. Emotion State Variations */
+/* A. Excited */
+.emotion-excited .helix-head-group {
+  transform: rotate(2deg) scale(1.02);
+}
+.emotion-excited .helix-mouth .mouth-neutral { display: none; }
+.emotion-excited .helix-mouth .mouth-happy { display: block; }
+.emotion-excited .helix-body-group {
+  animation: helixExcitedBounce 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes helixExcitedBounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-7px); }
+}
+
+/* B. Thinking */
+.emotion-thinking .helix-head-group {
+  transform: rotate(-3deg) translateY(-2px);
+}
+.emotion-thinking .arm-pose-explaining { display: none; }
+.emotion-thinking .arm-pose-thinking { display: block; }
+.emotion-thinking .helix-mouth .mouth-neutral { display: none; }
+.emotion-thinking .helix-mouth .mouth-thinking { display: block; }
+
+/* C. Celebrating */
+.emotion-celebrating .arm-pose-explaining { display: none; }
+.emotion-celebrating .arm-pose-celebrating { display: block; }
+.emotion-celebrating .helix-mouth .mouth-neutral { display: none; }
+.emotion-celebrating .helix-mouth .mouth-happy { display: block; }
+.emotion-celebrating .helix-body-group {
+  animation: helixCelebrateDance 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes helixCelebrateDance {
+  0% { transform: rotate(-2deg) translateY(-4px); }
+  100% { transform: rotate(2deg) translateY(-8px); }
+}
+
+/* D. Surprised */
+.emotion-surprised .helix-mouth .mouth-neutral { display: none; }
+.emotion-surprised .helix-mouth .mouth-surprised { display: block; }
+.emotion-surprised .helix-head-group {
+  transform: translateY(-4px);
+}
+
+/* 4. Toolbar & Accessories Selector */
+.helix-toolbar {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accessory-picker {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.acc-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--bg-panel-border);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.acc-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+.acc-btn.active {
+  background: rgba(2, 132, 199, 0.25);
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #38bdf8;
+}
+
+.helix-interactive-btn {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.2));
+  border: 1px solid rgba(236, 72, 153, 0.4);
+  color: #f472b6;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.helix-interactive-btn:hover {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.35), rgba(168, 85, 247, 0.35));
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+  transform: translateY(-1px);
+}

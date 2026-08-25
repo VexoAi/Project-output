@@ -1,0 +1,17 @@
+{
+  "name": "biobuddy-backend",
+  "version": "1.0.0",
+  "description": "Node.js static development and API server for BioBuddy 2D Biology Lab",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "biology",
+    "education",
+    "interactive-lab",
+    "speech-synthesis"
+  ],
+  "author": "BioBuddy Team",
+  "license": "MIT"
+}
