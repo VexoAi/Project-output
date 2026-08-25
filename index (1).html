@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BioProcess – AI Biology Teacher, 2D Animated Lab, Kid Adventures & Quizzes</title>
+  <meta name="description" content="Watch high-definition 60 FPS animated process videos of biological mechanisms with AI Biology Teacher Dr. Helix, hands-free voice control, 2-minute interactive kid adventures, comprehensive student study notes, and topic mastery quizzes." />
+
+  <!-- Google Fonts & Modern Styling -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/simulations.css" />
+</head>
+
+<body>
+  <!-- Clean Sleek Top Header -->
+  <header class="app-header">
+    <div class="brand-wrap">
+      <span class="brand-icon">🧬</span>
+      <div>
+        <span class="brand-title">BioProcess</span>
+        <span class="brand-badge">AI Biology Teacher Lab</span>
+      </div>
+    </div>
+
+    <!-- Topic Selector Pills in Top Navigation -->
+    <nav class="topic-pills-nav" id="topic-pills-nav">
+      <!-- Injected dynamically by app.js -->
+    </nav>
+
+    <!-- Header Action Controls (Teacher Mode, Kid Tour, Quiz, Voice & Commands) -->
+    <div class="header-action-group">
+      <button class="header-icon-btn teacher-header-btn" id="btn-header-teacher-mode" title="Start AI Biology Teacher 8-Step Interactive Lesson! (Shortcut: 'T')">
+        👩‍🏫 <span>Teacher Mode</span>
+      </button>
+      <button class="header-icon-btn kid-tour-header-btn" id="btn-header-kid-mode" title="Start 2-Minute Interactive Kid Story Adventure! (Shortcut: 'K')">
+        🎒 <span>2-Min Kid Tour</span>
+      </button>
+      <button class="header-icon-btn quiz-nav-btn" id="btn-header-quiz" title="Test your knowledge with Topic Quiz (Shortcut: 'Q')">
+        🎯 <span>Take Quiz</span>
+      </button>
+      <button class="header-voice-btn" id="btn-toggle-voice" title="Toggle Voice Recognition (Shortcut: 'V')">
+        🎙️ <span>Voice Control: OFF</span>
+      </button>
+      <button class="header-icon-btn" id="btn-voice-help" title="View Voice Commands & Study Notes Cheat Sheet">
+        ❓ Commands
+      </button>
+    </div>
+  </header>
+
+  <!-- Interactive Voice & Smart Question HUD / Live Banner -->
+  <section class="voice-hud-container" id="voice-command-hud">
+    <div class="voice-hud-inner">
+      <div class="voice-hud-left">
+        <div class="voice-mic-indicator">
+          <span class="mic-dot"></span>
+          <span class="mic-label" id="voice-status-indicator">Mic Standby</span>
+        </div>
+
+        <!-- Animated Audio Waveform Spectrum -->
+        <div class="audio-wave-visualizer">
+          <span class="wave-bar bar-1"></span>
+          <span class="wave-bar bar-2"></span>
+          <span class="wave-bar bar-3"></span>
+          <span class="wave-bar bar-4"></span>
+          <span class="wave-bar bar-5"></span>
+        </div>
+
+        <!-- Live Recognized Transcript -->
+        <div class="voice-transcript-wrapper">
+          <span class="transcript-label">Heard:</span>
+          <span class="voice-transcript-text" id="voice-transcript-text">"Ask any question, command, or say 'Teacher Mode'..."</span>
+        </div>
+      </div>
+
+      <div class="voice-hud-right">
+        <!-- Live Action Status Feedback Pill -->
+        <div class="voice-feedback-pill idle" id="voice-feedback-pill">
+          🎙️ Voice, AI Teacher Mode & 2-Min Kid Adventures Ready!
+        </div>
+
+        <!-- Manual Quick Trigger & Question Input -->
+        <form class="voice-cmd-form" id="voice-cmd-form" onsubmit="return false;">
+          <input type="text" id="voice-manual-input" class="voice-cmd-input" placeholder="Ask question or type 'Teacher mode', 'Kid tour', 'Start Quiz'..." />
+          <button type="submit" id="btn-run-manual-cmd" class="voice-cmd-submit-btn">Ask / Run</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Quick Voice Actions & Smart Questions Row -->
+    <div class="voice-quick-chips-row">
+      <button class="voice-chip-btn teacher-chip" data-cmd="teacher mode">👩‍🏫 "Teacher Mode"</button>
+      <button class="voice-chip-btn kid-chip" data-cmd="kid tour">🎒 "2-Min Kid Tour"</button>
+      <span class="quick-chip-hint">💡 Try Asking Questions:</span>
+      <button class="voice-chip-btn question-chip" data-cmd="why is left ventricle thick">❓ "Why is left ventricle thick?"</button>
+      <button class="voice-chip-btn question-chip" data-cmd="how does helicase work">❓ "How does Helicase work?"</button>
+      <button class="voice-chip-btn question-chip" data-cmd="how does diaphragm move">❓ "How does diaphragm move?"</button>
+      <button class="voice-chip-btn question-chip" data-cmd="where does oxygen come from">❓ "Where does O₂ come from?"</button>
+      <button class="voice-chip-btn" data-cmd="start quiz">🎯 "Start Quiz"</button>
+      <button class="voice-chip-btn" data-cmd="read notes">📝 "Read Notes"</button>
+      <button class="voice-chip-btn" data-cmd="open dna">🧬 "Open DNA"</button>
+      <button class="voice-chip-btn" data-cmd="open circulatory">❤️ "Open Circulatory"</button>
+      <button class="voice-chip-btn" data-cmd="open respiratory">🫁 "Open Respiratory"</button>
+      <button class="voice-chip-btn" data-cmd="play">▶ "Play"</button>
+    </div>
+  </section>
+
+  <!-- Master Cinema & Student Study Notes Layout Container -->
+  <main class="cinema-main-container">
+    <!-- Active Topic Process Video Player (Left Main) -->
+    <div class="cinema-player-card" id="cinema-player-root">
+      <!-- Injected dynamically by active topic module -->
+    </div>
+
+    <!-- Student Study Companion & Notes Side Panel (Right Sidebar) -->
+    <div class="study-notes-sidebar-root" id="study-notes-sidebar-root">
+      <!-- Injected dynamically by studyNotesUI.js -->
+    </div>
+  </main>
+
+  <!-- Topic Mastery Quiz Modal with Live Video Sync -->
+  <div class="quiz-mastery-modal-overlay" id="quiz-mastery-modal">
+    <div class="quiz-mastery-modal-card">
+      <div class="quiz-modal-top-header">
+        <div class="quiz-modal-brand-title">
+          <span>🎯</span> Topic Knowledge Mastery Challenge (Live Video Synced)
+        </div>
+        <button class="quiz-modal-close-btn" id="btn-close-quiz-modal">✕</button>
+      </div>
+
+      <!-- Injected dynamically by quizEngine.js -->
+      <div class="quiz-modal-body-root" id="quiz-modal-body-root"></div>
+    </div>
+  </div>
+
+  <!-- Voice Commands Reference Modal -->
+  <div class="voice-modal-overlay" id="voice-help-modal">
+    <div class="voice-modal-card">
+      <div class="voice-modal-header">
+        <div class="voice-modal-title">
+          <span>🎙️</span> BioProcess Voice Commands & AI Teacher Guide
+        </div>
+        <button class="voice-modal-close" id="btn-close-modal">✕</button>
+      </div>
+
+      <div class="voice-modal-body">
+        <p class="voice-modal-intro">
+          Control the lab, study notes, teacher lessons, kid adventure tours, and quizzes completely hands-free using natural speech recognition!
+        </p>
+
+        <div class="voice-commands-grid">
+          <!-- AI Teacher & Kid Mode -->
+          <div class="cmd-category-box">
+            <h4 class="cmd-cat-title">👩‍🏫 AI Teacher & Kid Adventures</h4>
+            <div class="cmd-list">
+              <div class="cmd-item" data-cmd="teacher mode"><code>"Teacher mode" / "Teach me"</code> <span>Starts Dr. Helix 8-step interactive lesson</span></div>
+              <div class="cmd-item" data-cmd="kid tour"><code>"Kid tour" / "Kid mode"</code> <span>Starts fun 2-min interactive story tour</span></div>
+              <div class="cmd-item" data-cmd="tell kid story"><code>"Tell kid story"</code> <span>Launches interactive kid missions & fun facts</span></div>
+            </div>
+          </div>
+
+          <!-- Smart Question-to-Video Queries -->
+          <div class="cmd-category-box">
+            <h4 class="cmd-cat-title">🧠 Smart Question-to-Video Queries</h4>
+            <div class="cmd-list">
+              <div class="cmd-item" data-cmd="how does helicase work"><code>"How does Helicase work?"</code> <span>Jumps to DNA Step 2</span></div>
+              <div class="cmd-item" data-cmd="why is left ventricle thick"><code>"Why is left ventricle thick?"</code> <span>Jumps to Heart Step 5</span></div>
+              <div class="cmd-item" data-cmd="how does diaphragm move"><code>"How does diaphragm move?"</code> <span>Jumps to Lungs Step 2</span></div>
+              <div class="cmd-item" data-cmd="where does oxygen come from"><code>"Where does oxygen come from?"</code> <span>Jumps to Chloroplast Step 2</span></div>
+            </div>
+          </div>
+
+          <!-- Quiz & Knowledge Challenges -->
+          <div class="cmd-category-box">
+            <h4 class="cmd-cat-title">🎯 Quizzes & Mastery</h4>
+            <div class="cmd-list">
+              <div class="cmd-item" data-cmd="start quiz"><code>"Start Quiz" / "Test Me"</code> <span>Launches active topic mastery challenge</span></div>
+              <div class="cmd-item" data-cmd="option a"><code>"Option A"</code> <span>Selects choice A during quiz</span></div>
+              <div class="cmd-item" data-cmd="option b"><code>"Option B"</code> <span>Selects choice B during quiz</span></div>
+            </div>
+          </div>
+
+          <!-- Topic Navigation -->
+          <div class="cmd-category-box">
+            <h4 class="cmd-cat-title">🧭 Topic Navigation</h4>
+            <div class="cmd-list">
+              <div class="cmd-item" data-cmd="open dna"><code>"Open DNA"</code> <span>Loads DNA Genetics lab</span></div>
+              <div class="cmd-item" data-cmd="open circulatory"><code>"Open Circulatory"</code> <span>Loads heart & cardiovascular</span></div>
+              <div class="cmd-item" data-cmd="open respiratory"><code>"Open Respiratory"</code> <span>Loads lungs & gas exchange</span></div>
+              <div class="cmd-item" data-cmd="open nervous"><code>"Open Nervous"</code> <span>Loads neural synapse & brain</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Audio & Speech Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/character.js"></script>
+
+  <!-- Comprehensive Student Study Notes Engine -->
+  <script src="js/studyNotes.js"></script>
+  <script src="js/studyNotesUI.js"></script>
+
+  <!-- AI Teacher Lesson Engine & Kid Mode Engine -->
+  <script src="js/teacherLessonEngine.js"></script>
+  <script src="js/kidModeEngine.js"></script>
+
+  <!-- Smart Question-to-Video Engine & Quiz Engine -->
+  <script src="js/smartQuestionEngine.js"></script>
+  <script src="js/quizEngine.js"></script>
+
+  <!-- Topic Animated Process Modules -->
+  <script src="js/topics/dnaGenetics.js"></script>
+  <script src="js/topics/circulatory.js"></script>
+  <script src="js/topics/respiratory.js"></script>
+  <script src="js/topics/nervous.js"></script>
+  <script src="js/topics/photosynthesis.js"></script>
+  <script src="js/topics/cellStructure.js"></script>
+  <script src="js/topics/microorganisms.js"></script>
+  <script src="js/topics/digestive.js"></script>
+  <script src="js/topics/animalClass.js"></script>
+  <script src="js/topics/ecosystem.js"></script>
+
+  <!-- Voice Controller Engine & App Coordinator -->
+  <script src="js/voiceCommand.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
