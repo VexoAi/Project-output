@@ -989,6 +989,237 @@ function drawHydraulicTruck(ctx, x, y, tilt = 0) {
     ctx.restore();
 }
 
+function drawCoasterTrack(ctx, groundY, t) {
+    ctx.save();
+    
+    // Support scaffolding trusses
+    ctx.strokeStyle = "rgba(148, 163, 184, 0.4)";
+    ctx.lineWidth = 3;
+    const peakX = viewWidth * 0.14;
+    const peakY = viewHeight * 0.30;
+    
+    // Tower lattice on left
+    ctx.beginPath();
+    ctx.moveTo(peakX - 30, groundY); ctx.lineTo(peakX - 20, peakY);
+    ctx.moveTo(peakX + 30, groundY); ctx.lineTo(peakX + 20, peakY);
+    for (let y = peakY + 20; y < groundY; y += 30) {
+        ctx.moveTo(peakX - 25, y); ctx.lineTo(peakX + 25, y);
+        ctx.moveTo(peakX - 25, y); ctx.lineTo(peakX + 25, y + 25);
+    }
+    ctx.stroke();
+
+    // Loop support towers
+    const loopX = viewWidth * 0.58;
+    const loopY = viewHeight * 0.44;
+    const loopR = 65;
+    ctx.beginPath();
+    ctx.moveTo(loopX - loopR, groundY); ctx.lineTo(loopX - loopR, loopY);
+    ctx.moveTo(loopX + loopR, groundY); ctx.lineTo(loopX + loopR, loopY);
+    ctx.moveTo(loopX, groundY); ctx.lineTo(loopX, loopY + loopR);
+    ctx.stroke();
+
+    // Track Ties / Rails
+    // Base rail (Purple Neon Glow)
+    ctx.strokeStyle = "#a855f7";
+    ctx.lineWidth = 8;
+    ctx.shadowColor = "#a855f7";
+    ctx.shadowBlur = 12;
+    ctx.beginPath();
+    ctx.moveTo(viewWidth * 0.05, peakY);
+    ctx.lineTo(peakX, peakY);
+    ctx.quadraticCurveTo(viewWidth * 0.32, groundY, viewWidth * 0.48, groundY - 10);
+    ctx.lineTo(loopX - loopR, groundY - 10);
+    ctx.stroke();
+
+    // 360° Loop Track
+    ctx.beginPath();
+    ctx.arc(loopX, loopY, loopR, Math.PI * 0.5, Math.PI * 2.5);
+    ctx.stroke();
+
+    // Exit Track
+    ctx.beginPath();
+    ctx.moveTo(loopX + loopR * 0.3, groundY - 10);
+    ctx.lineTo(viewWidth * 0.95, groundY - 10);
+    ctx.stroke();
+
+    // Conductor Cyan Rail (Upper rail)
+    ctx.strokeStyle = "#00f0ff";
+    ctx.lineWidth = 3;
+    ctx.shadowColor = "#00f0ff";
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.moveTo(viewWidth * 0.05, peakY - 8);
+    ctx.lineTo(peakX, peakY - 8);
+    ctx.quadraticCurveTo(viewWidth * 0.32, groundY - 8, viewWidth * 0.48, groundY - 18);
+    ctx.lineTo(loopX - loopR, groundY - 18);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(loopX, loopY, loopR - 8, Math.PI * 0.5, Math.PI * 2.5);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(loopX + loopR * 0.3, groundY - 18);
+    ctx.lineTo(viewWidth * 0.95, groundY - 18);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Maglev Energy Pulses along track
+    for (let i = 0; i < 6; i++) {
+        const px = ((t * 220 + i * 140) % (viewWidth * 0.9)) + (viewWidth * 0.05);
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(px, groundY - 14, 3, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    ctx.restore();
+}
+
+function drawCoasterPod(ctx, x, y, angle, scale, isBoosted, t) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.scale(scale, scale);
+
+    // Rocket Thruster Flames if moving/boosted
+    if (isBoosted) {
+        ctx.save();
+        const flm = 28 + Math.sin(t * 35) * 14;
+        ctx.fillStyle = "#00f0ff";
+        ctx.shadowColor = "#00f0ff";
+        ctx.shadowBlur = 15;
+        ctx.beginPath();
+        ctx.moveTo(-42, -6);
+        ctx.lineTo(-42 - flm, 0);
+        ctx.lineTo(-42, 6);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.moveTo(-42, -3);
+        ctx.lineTo(-42 - flm * 0.5, 0);
+        ctx.lineTo(-42, 3);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+
+    // Pod Body
+    applyInk(ctx, "#090d1f", "#00f0ff", 3.5);
+    ctx.beginPath();
+    ctx.moveTo(-40, 10);
+    ctx.lineTo(35, 10);
+    ctx.quadraticCurveTo(50, 0, 35, -12);
+    ctx.lineTo(-30, -12);
+    ctx.quadraticCurveTo(-45, -5, -40, 10);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Neon Accent Trim
+    ctx.strokeStyle = isBoosted ? "#facc15" : "#a855f7";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(-32, 2);
+    ctx.lineTo(30, 2);
+    ctx.stroke();
+
+    // Windshield Cockpit
+    ctx.fillStyle = "rgba(0, 240, 255, 0.4)";
+    ctx.beginPath();
+    ctx.moveTo(-10, -12);
+    ctx.lineTo(20, -12);
+    ctx.lineTo(10, -26);
+    ctx.lineTo(-5, -26);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Maglev Glide Wheels / Magnetic Skids
+    applyInk(ctx, "#facc15", "#05050a", 2);
+    ctx.beginPath();
+    ctx.roundRect(-30, 10, 18, 6, 2);
+    ctx.roundRect(15, 10, 18, 6, 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Headlight Beam
+    ctx.fillStyle = "rgba(0, 240, 255, 0.35)";
+    ctx.beginPath();
+    ctx.moveTo(35, -2);
+    ctx.lineTo(95, -18);
+    ctx.lineTo(95, 14);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
+}
+
+function drawEnergyConversionHUD(ctx, peVal, keVal, maxVal, vVal, isVictory, t) {
+    ctx.save();
+    const hudX = viewWidth * 0.58;
+    const hudY = 40;
+    const hudW = Math.min(360, viewWidth * 0.38);
+    const hudH = 110;
+
+    // Glassmorphism Card
+    ctx.fillStyle = "rgba(15, 23, 42, 0.88)";
+    ctx.strokeStyle = isVictory ? "#facc15" : "#00f0ff";
+    ctx.lineWidth = 2;
+    ctx.shadowColor = isVictory ? "#facc15" : "#00f0ff";
+    ctx.shadowBlur = isVictory ? 18 : 10;
+    ctx.beginPath();
+    ctx.roundRect(hudX, hudY, hudW, hudH, 10);
+    ctx.fill();
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Header Title
+    ctx.fillStyle = isVictory ? "#facc15" : "#38bdf8";
+    ctx.font = "bold 13px 'Outfit', sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText(isVictory ? "⚡ WORK-ENERGY THEOREM (MAX 100%)" : "⚡ LIVE MECHANICAL ENERGY CONVERSION", hudX + 14, hudY + 22);
+
+    // PE Bar
+    const pePct = Math.max(0, Math.min(1, peVal / maxVal));
+    ctx.fillStyle = "#facc15";
+    ctx.font = "bold 11px 'Inter', sans-serif";
+    ctx.fillText(`PE (mgh): ${Math.round(peVal)} J`, hudX + 14, hudY + 44);
+    
+    ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
+    ctx.fillRect(hudX + 120, hudY + 34, hudW - 136, 12);
+    const peGrad = ctx.createLinearGradient(hudX + 120, 0, hudX + 120 + (hudW - 136), 0);
+    peGrad.addColorStop(0, "#eab308");
+    peGrad.addColorStop(1, "#facc15");
+    ctx.fillStyle = peGrad;
+    ctx.fillRect(hudX + 120, hudY + 34, (hudW - 136) * pePct, 12);
+
+    // KE Bar
+    const kePct = Math.max(0, Math.min(1, keVal / maxVal));
+    ctx.fillStyle = "#00f0ff";
+    ctx.fillText(`KE (½mv²): ${Math.round(keVal)} J`, hudX + 14, hudY + 68);
+
+    ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
+    ctx.fillRect(hudX + 120, hudY + 58, hudW - 136, 12);
+    const keGrad = ctx.createLinearGradient(hudX + 120, 0, hudX + 120 + (hudW - 136), 0);
+    keGrad.addColorStop(0, "#0284c7");
+    keGrad.addColorStop(1, "#00f0ff");
+    ctx.fillStyle = keGrad;
+    ctx.fillRect(hudX + 120, hudY + 58, (hudW - 136) * kePct, 12);
+
+    // Speed & Total Status
+    ctx.fillStyle = "#e2e8f0";
+    ctx.font = "11px 'Outfit', sans-serif";
+    ctx.fillText(`Velocity: v = ${vVal.toFixed(1)} m/s`, hudX + 14, hudY + 95);
+    ctx.fillStyle = "#4ade80";
+    ctx.textAlign = "right";
+    ctx.fillText(`E_total = 5000 J (Conserved)`, hudX + hudW - 14, hudY + 95);
+
+    ctx.restore();
+}
+
 function drawThermalLabApparatus(ctx, flameX, rodX1, rodX2, rodY, heatProg, t) {
     ctx.save();
 
@@ -1346,20 +1577,164 @@ function renderScene2D(t, currentTopicKey, isIdleState, dialogueTriggered) {
         }
     }
 
-    // 6. WORK & ENERGY
+    // 6. WORK & ENERGY (Kinetic & Potential Conservation • Dynamic Coaster Loop & Victory Level)
     else if (currentTopicKey === "energy") {
+        drawCoasterTrack(ctx, groundY, t);
+
+        const peakX = viewWidth * 0.14;
+        const peakY = viewHeight * 0.30;
+        const loopX = viewWidth * 0.58;
+        const loopY = viewHeight * 0.44;
+        const loopR = 65;
+
         if (t < 10.0) {
-            drawGOne2D(ctx, viewWidth * 0.2, groundY - 70, 0.9, "push", t);
-            drawRaOne2D(ctx, viewWidth * 0.75, groundY, 1.1, "laugh", t);
-            drawForceArrow(ctx, viewWidth * 0.15, groundY - 90, viewWidth * 0.25, groundY - 90, "PE = mgh = 5000 J", "#facc15");
+            // PHASE 1: Potential Energy Peak (0-10s)
+            drawCoasterPod(ctx, peakX, peakY - 14, 0, 1.0, false, t);
+            drawGOne2D(ctx, peakX + 2, peakY - 45, 0.75, "push", t);
+            drawRaOne2D(ctx, viewWidth * 0.78, groundY, 1.1, "laugh", t);
+
+            // Height Dimension Indicator
+            ctx.save();
+            ctx.strokeStyle = "#facc15";
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(peakX - 35, peakY);
+            ctx.lineTo(peakX - 35, groundY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = "#facc15";
+            ctx.font = "bold 13px 'Outfit', sans-serif";
+            ctx.textAlign = "right";
+            ctx.fillText("h = 25 m", peakX - 42, (peakY + groundY) / 2);
+            ctx.restore();
+
+            drawForceArrow(ctx, peakX - 20, peakY - 55, peakX + 60, peakY - 55, "PE = mgh = 5000 J", "#facc15");
+            drawEnergyConversionHUD(ctx, 5000, 0, 5000, 0, false, t);
+
         } else if (t < 20.0) {
-            const cx = viewWidth * 0.2 + (t - 10.0) * 60;
-            drawGOne2D(ctx, cx, groundY - 30, 0.9, "run", t);
-            drawForceArrow(ctx, cx, groundY - 60, cx + 60, groundY - 60, "KE = ½mv² = 5000 J", "#00f0ff");
-            drawRaOne2D(ctx, viewWidth * 0.85, groundY, 1.1, "shock", t);
+            // PHASE 2: Kinetic Energy Conversion & 360° Loop Flight (10-20s)
+            const tau = t - 10.0;
+            let cartX = peakX;
+            let cartY = peakY - 14;
+            let cartAng = 0;
+            let currentPE = 5000;
+            let currentKE = 0;
+            let currentV = 0;
+
+            if (tau < 2.5) {
+                // Descending drop hill
+                const p = tau / 2.5;
+                cartX = peakX + p * (viewWidth * 0.44 - peakX);
+                cartY = (peakY - 14) + (p * p) * (groundY - 14 - (peakY - 14));
+                cartAng = Math.atan2(groundY - 14 - (peakY - 14), viewWidth * 0.44 - peakX) * 0.8;
+                currentPE = 5000 * (1 - p);
+                currentKE = 5000 * p;
+                currentV = Math.sqrt(2 * 9.8 * 25 * p);
+            } else if (tau < 6.5) {
+                // 360° Loop traversal
+                const p = (tau - 2.5) / 4.0;
+                const ang = Math.PI * 0.5 + p * Math.PI * 2;
+                cartX = loopX + Math.cos(ang) * (loopR - 10);
+                cartY = loopY + Math.sin(ang) * (loopR - 10);
+                cartAng = ang + Math.PI * 0.5;
+                const hNorm = (1 - Math.sin(ang)) * 0.5;
+                currentPE = 2200 * hNorm;
+                currentKE = 5000 - currentPE;
+                currentV = Math.sqrt(2 * (currentKE / 20));
+
+                if (!dialogueTriggered["energy_loop_zap"] && tau > 3.0) {
+                    dialogueTriggered["energy_loop_zap"] = true;
+                    if (typeof sounds !== "undefined" && sounds.playZap) sounds.playZap();
+                }
+            } else {
+                // Exit straight rush
+                const p = (tau - 6.5) / 3.5;
+                cartX = (loopX + loopR * 0.3) + p * (viewWidth * 0.92 - (loopX + loopR * 0.3));
+                cartY = groundY - 14;
+                cartAng = 0;
+                currentPE = 0;
+                currentKE = 5000;
+                currentV = 22.1;
+            }
+
+            drawCoasterPod(ctx, cartX, cartY, cartAng, 1.0, true, t);
+            drawGOne2D(ctx, cartX, cartY - 30, 0.75, "run", t);
+
+            // Ra.One shocked
+            drawRaOne2D(ctx, viewWidth * 0.82, groundY, 1.1, "shock", t);
+            drawForceArrow(ctx, cartX, cartY - 60, cartX + 60, cartY - 60, `KE = ½mv² = ${Math.round(currentKE)} J`, "#00f0ff");
+            drawEnergyConversionHUD(ctx, currentPE, currentKE, 5000, currentV, false, t);
+
         } else {
-            drawGOne2D(ctx, viewWidth * 0.35, groundY, 1.1, "flex", t);
-            drawRaOne2D(ctx, viewWidth * 0.85, groundY, 1.1, "flatten", t);
+            // PHASE 3: VICTORY LEVEL (20-30s) 🏆 - Hyper Kinetic Victory Loop & Energy Blast
+            const tau = t - 20.0;
+            const loopP = (tau * 0.9) % 1.0;
+            const ang = Math.PI * 0.5 + loopP * Math.PI * 2;
+            const vCartX = loopX + Math.cos(ang) * (loopR - 10);
+            const vCartY = loopY + Math.sin(ang) * (loopR - 10);
+            const vCartAng = ang + Math.PI * 0.5;
+
+            // Victory Pod looping at supersonic speed
+            drawCoasterPod(ctx, vCartX, vCartY, vCartAng, 1.05, true, t);
+
+            // G.One in ultra-charged heroic victory hovering pose with glowing cyan aura
+            const gHoverY = groundY - 45 + Math.sin(t * 5) * 12;
+            ctx.save();
+            ctx.shadowColor = "#00f0ff";
+            ctx.shadowBlur = 30;
+            ctx.strokeStyle = "rgba(0, 240, 255, 0.6)";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.arc(viewWidth * 0.32, gHoverY + 30, 45 + Math.sin(t * 8) * 8, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+
+            drawGOne2D(ctx, viewWidth * 0.32, gHoverY, 1.15, "rocket", t);
+
+            // Kinetic Electric Discharges
+            ctx.save();
+            ctx.strokeStyle = "#facc15";
+            ctx.lineWidth = 3;
+            for (let i = 0; i < 4; i++) {
+                const zx = viewWidth * 0.32 + Math.cos(t * 10 + i) * 60;
+                const zy = gHoverY + Math.sin(t * 10 + i) * 50;
+                ctx.beginPath();
+                ctx.moveTo(viewWidth * 0.32, gHoverY + 20);
+                ctx.lineTo(zx, zy);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // Ra.One spinning in total defeat
+            drawRaOne2D(ctx, viewWidth * 0.86, groundY - 20, 1.05, "spin", t);
+
+            // Dynamic Victory Badges & Formula Banner
+            ctx.save();
+            ctx.fillStyle = "rgba(250, 204, 21, 0.15)";
+            ctx.strokeStyle = "#facc15";
+            ctx.lineWidth = 2.5;
+            ctx.shadowColor = "#facc15";
+            ctx.shadowBlur = 18;
+            ctx.beginPath();
+            ctx.roundRect(viewWidth * 0.18, groundY + 15, viewWidth * 0.64, 38, 8);
+            ctx.fill();
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 15px 'Outfit', sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("🏆 WORK = ΔKE = +5000 J • MECHANICAL ENERGY 100% CONSERVED! ⚡", viewWidth * 0.5, groundY + 40);
+            ctx.restore();
+
+            drawForceArrow(ctx, viewWidth * 0.22, gHoverY - 50, viewWidth * 0.44, gHoverY - 50, "W = F·d = +5000 J (MAX KE)", "#facc15");
+            drawEnergyConversionHUD(ctx, 0, 5000, 5000, 22.1, true, t);
+
+            if (!dialogueTriggered["energy_victory_sound"] && tau > 0.5) {
+                dialogueTriggered["energy_victory_sound"] = true;
+                if (typeof sounds !== "undefined" && sounds.playBounce) sounds.playBounce();
+            }
         }
     }
 
@@ -1761,10 +2136,177 @@ function renderScene2D(t, currentTopicKey, isIdleState, dialogueTriggered) {
         }
     }
 
+    // 19. GENERATIVE DYNAMIC TOPIC RENDERING (Custom Voice-Generated Physics Scenarios)
     else {
-        drawGOne2D(ctx, viewWidth * 0.3, groundY, 1.1, "flex", t);
-        drawRaOne2D(ctx, viewWidth * 0.75, groundY, 1.1, t > 15 ? "puddle" : "idle", t);
+        drawGenerativePhysicsScene(ctx, groundY, t, currentTopicKey);
     }
+}
+
+function drawGenerativePhysicsScene(ctx, groundY, t, topicKey) {
+    const cfg = (typeof TOPIC_CONFIG !== "undefined" && TOPIC_CONFIG[topicKey]) ? TOPIC_CONFIG[topicKey] : {
+        title: "AI DYNAMIC PHYSICS SIMULATION",
+        sub: "QUANTUM VECTOR FIELD & KINEMATICS",
+        level: "AI GEN • 30s"
+    };
+
+    const viewWidth = canvas.width;
+    const viewHeight = canvas.height;
+
+    ctx.save();
+
+    // 1. Dynamic Vector Grid & Ambient Energy Field
+    ctx.strokeStyle = "rgba(0, 240, 255, 0.12)";
+    ctx.lineWidth = 1;
+    const gridSize = 40;
+    const gridOffset = (t * 22) % gridSize;
+    for (let x = -gridSize; x < viewWidth + gridSize; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x + gridOffset, 0);
+        ctx.lineTo(x + gridOffset, groundY + 120);
+        ctx.stroke();
+    }
+    for (let y = 0; y < groundY + 120; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(viewWidth, y);
+        ctx.stroke();
+    }
+
+    // Dynamic Physics Particles
+    for (let i = 0; i < 28; i++) {
+        const px = (viewWidth * 0.12 + ((i * 53 + t * 75) % (viewWidth * 0.76)));
+        const py = (groundY - 190 + ((i * 37 + t * 45) % 240));
+        const pSize = 2.5 + (i % 4);
+        const pAlpha = 0.35 + 0.5 * Math.sin(t * 3 + i);
+        ctx.fillStyle = (i % 2 === 0) ? `rgba(0, 240, 255, ${pAlpha})` : `rgba(250, 204, 21, ${pAlpha})`;
+        ctx.beginPath();
+        ctx.arc(px, py, pSize, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    // 2. Real-Time Physical HUD Telemetry Box
+    const hudW = 280;
+    const hudH = 115;
+    const hudX = viewWidth - hudW - 25;
+    const hudY = 30;
+    ctx.fillStyle = "rgba(10, 15, 30, 0.88)";
+    ctx.strokeStyle = "#00f0ff";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(hudX, hudY, hudW, hudH, 8);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = "#00f0ff";
+    ctx.font = "bold 11px 'Outfit', sans-serif";
+    ctx.fillText("⚡ REAL-TIME AI TELEMETRY HUD", hudX + 12, hudY + 20);
+
+    const fVal = (50 + Math.sin(t * 2) * 35).toFixed(1);
+    const vVal = (15 + (t % 10) * 4.2).toFixed(1);
+    const eVal = (fVal * vVal * 0.5).toFixed(0);
+
+    ctx.fillStyle = "#e2e8f0";
+    ctx.font = "11px 'Inter', sans-serif";
+    ctx.fillText(`Vector: ${(cfg.title || 'Dynamic').substring(0, 22)}`, hudX + 12, hudY + 40);
+    ctx.fillText(`Applied Force F: ${fVal} N`, hudX + 12, hudY + 58);
+    ctx.fillText(`Velocity v(t): ${vVal} m/s`, hudX + 12, hudY + 76);
+    ctx.fillText(`Kinetic Power P: ${eVal} Watts`, hudX + 12, hudY + 94);
+
+    // Dynamic Telemetry Waveform Inside HUD
+    ctx.strokeStyle = "#facc15";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let wx = 0; wx < 70; wx++) {
+        const wy = hudY + 70 + Math.sin((t * 8) + wx * 0.2) * 14;
+        if (wx === 0) ctx.moveTo(hudX + hudW - 80 + wx, wy);
+        else ctx.lineTo(hudX + hudW - 80 + wx, wy);
+    }
+    ctx.stroke();
+
+    // 3. Dynamic Interactive Physics Apparatus & Simulation Phases
+    const centerX = viewWidth * 0.5;
+    const centerY = groundY - 50;
+
+    if (t < 10.0) {
+        // Phase 1: Interactive Field Setup & Emitter Alignment
+        const emitX = viewWidth * 0.25;
+        const targetX = viewWidth * 0.72;
+
+        // Energy Emitter Apparatus
+        ctx.fillStyle = "#1e293b";
+        ctx.strokeStyle = "#00f0ff";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.roundRect(emitX - 35, groundY - 80, 70, 80, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        // Pulsing Core
+        ctx.fillStyle = "#00f0ff";
+        ctx.beginPath();
+        ctx.arc(emitX, groundY - 40, 16 + Math.sin(t * 8) * 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Laser Beam Stream
+        const beamEnd = emitX + (t / 10.0) * (targetX - emitX);
+        ctx.strokeStyle = "#00f0ff";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(emitX + 35, groundY - 40);
+        ctx.lineTo(beamEnd, groundY - 40);
+        ctx.stroke();
+
+        drawForceArrow(ctx, emitX + 50, groundY - 65, beamEnd, groundY - 65, "Quantum Vector Stream ➔", "#00f0ff");
+
+        drawGOne2D(ctx, viewWidth * 0.15, groundY, 1.1, "push", t);
+        drawRaOne2D(ctx, targetX, groundY, 1.1, "idle", t);
+    } else if (t < 20.0) {
+        // Phase 2: Active Dynamic Physics Simulation & High-Energy Interaction
+        const phaseT = t - 10.0;
+        const orbX = centerX + Math.sin(t * 3) * (viewWidth * 0.2);
+        const orbY = centerY - 30 + Math.cos(t * 4) * 40;
+
+        // Central Dynamic Plasma Vortex
+        for (let r = 15; r <= 85; r += 20) {
+            const rad = (r + (phaseT * 25)) % 85;
+            ctx.strokeStyle = `rgba(250, 204, 21, ${Math.max(0, 1 - rad / 85)})`;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(orbX, orbY, rad, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        ctx.fillStyle = "#facc15";
+        ctx.beginPath();
+        ctx.arc(orbX, orbY, 18, 0, Math.PI * 2);
+        ctx.fill();
+
+        drawForceArrow(ctx, viewWidth * 0.22, groundY - 80, orbX, orbY, "Dynamic Physics Interaction", "#facc15");
+
+        drawGOne2D(ctx, viewWidth * 0.2, groundY, 1.1, "laser", t);
+
+        const raHopY = Math.abs(Math.sin(t * 12)) * 45;
+        const raX = viewWidth * 0.75 + Math.sin(t * 6) * 30;
+        drawRaOne2D(ctx, raX, groundY - raHopY, 1.05, "shock", t);
+    } else {
+        // Phase 3: Grand Finale & Discovery Level Celebration
+        const hoverY = Math.sin(t * 4) * 16;
+        drawGOne2D(ctx, viewWidth * 0.25, groundY - 35 + hoverY, 1.15, "rocket", t);
+
+        // Radiant Aura around G.One
+        ctx.strokeStyle = "rgba(0, 240, 255, 0.6)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(viewWidth * 0.25, groundY - 60 + hoverY, 65, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Ra.One spinning comical defeat
+        drawRaOne2D(ctx, viewWidth * 0.78, groundY, 1.1, "puddle", t);
+
+        // Discovery Banner
+        drawForceArrow(ctx, viewWidth * 0.35, groundY - 80, viewWidth * 0.72, groundY - 80, "✨ TOPIC SIMULATION DISCOVERY COMPLETE!", "#00f0ff");
+    }
+    ctx.restore();
 }
 
 if (typeof window !== "undefined") {

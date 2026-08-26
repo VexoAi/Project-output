@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Bungee&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css?v=24">
 </head>
 <body>
 
@@ -77,6 +77,15 @@
                         <span id="levelLabel">LVL 1 • 30s</span>
                         <div class="power-bar-track">
                             <div class="power-bar-fill" id="powerBarFill"></div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Stage Active Topic Bar -->
+                    <div id="stageTopicBar" class="stage-topic-bar">
+                        <span class="stage-topic-icon" id="stageTopicIcon">🧱</span>
+                        <div class="stage-topic-info">
+                            <span class="stage-topic-sub" id="stageTopicSub">CURRENT TOPIC</span>
+                            <span class="stage-topic-title" id="stageTopicTitle">1. Newton's 1st Law (Inertia)</span>
                         </div>
                     </div>
 
@@ -181,17 +190,28 @@
                         <canvas id="voiceVisualizerCanvas" width="220" height="40"></canvas>
                     </div>
 
+                    <!-- Live Mic Audio Level Gauge -->
+                    <div class="mic-level-gauge-box">
+                        <div class="mic-level-header">
+                            <span class="mic-level-label">Microphone Audio Signal:</span>
+                            <span id="micAudioLevelValue" class="mic-level-val">OFFLINE</span>
+                        </div>
+                        <div class="mic-level-bar-track">
+                            <div id="micAudioLevelFill" class="mic-level-bar-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
                     <!-- Live Hearing Transcript Box -->
                     <div class="transcript-box">
-                        <span class="transcript-label">Live Audio Stream:</span>
-                        <div id="liveTranscriptText" class="transcript-content">"Say any topic like 'Gravity', 'Buoyancy', 'Pascal's Law', 'Electricity', 'Pendulum'..."</div>
+                        <span class="transcript-label">🗣️ Live Transcribed Speech:</span>
+                        <div id="liveTranscriptText" class="transcript-content">"Click the microphone button and speak any physics question or topic..."</div>
                     </div>
 
                     <!-- Custom Prompt & Manual Trigger Form -->
                     <form id="customTopicForm" class="topic-input-form">
-                        <input type="text" id="topicInput" placeholder="Speak or type any Physics topic..." autocomplete="off">
+                        <input type="text" id="topicInput" placeholder="Speak or type any Physics concept / scenario..." autocomplete="off">
                         <button type="submit" id="generateTopicBtn" class="topic-submit-btn" title="Generate 2D Animation Instantly">
-                            <span>⚡ Generate</span>
+                            <span>⚡ Generate Video</span>
                         </button>
                     </form>
                 </div>
@@ -383,11 +403,22 @@
                     <div class="quiz-badge-row">
                         <span class="quiz-pill" id="quizTopicBadge">TOPIC 1 • INERTIA</span>
                         <span class="quiz-counter" id="quizCounter">Question 1 of 2</span>
+                        <span class="quiz-timer-badge" id="quizTimerBadge">⏱ 5s</span>
                     </div>
                     <button id="closeQuizBtn" class="quiz-close-btn" title="Close Quiz">&times;</button>
                 </div>
+                <div class="quiz-timer-track">
+                    <div id="quizTimerBar" class="quiz-timer-bar"></div>
+                </div>
 
                 <div class="quiz-body">
+                    <div class="quiz-timer-banner">
+                        <div class="timer-banner-left">
+                            <span class="timer-pulse-circle"></span>
+                            <span class="timer-banner-label">AUTO-REVEAL TIMER</span>
+                        </div>
+                        <div id="quizLargeSeconds" class="timer-banner-count">⏱ 5 SECONDS</div>
+                    </div>
                     <h3 id="quizQuestionText" class="quiz-question-title">What is Newton's First Law also known as?</h3>
                     <div id="quizOptionsContainer" class="quiz-options-grid">
                         <!-- Rendered dynamically via JS -->
@@ -397,6 +428,7 @@
                         <div class="quiz-feedback-text">
                             <strong id="quizFeedbackTitle">Correct!</strong>
                             <p id="quizFeedbackDesc">Newton's First Law describes an object's tendency to resist changes in its state of motion.</p>
+                            <div id="quizAutoNextNotice" class="quiz-auto-indicator">⏱ Next question starting soon...</div>
                         </div>
                     </div>
                 </div>
@@ -441,10 +473,10 @@
     </div>
 
     <!-- Physics Audio, Curriculum, 2D Renderer, Teaching Engine & Main Controller -->
-    <script src="./physicsAudio.js"></script>
-    <script src="./physicsCurriculum.js"></script>
-    <script src="./physicsRenderer.js"></script>
-    <script src="./physicsTeaching.js"></script>
-    <script src="./script.js"></script>
+    <script src="./physicsAudio.js?v=24"></script>
+    <script src="./physicsCurriculum.js?v=24"></script>
+    <script src="./physicsRenderer.js?v=24"></script>
+    <script src="./physicsTeaching.js?v=24"></script>
+    <script src="./script.js?v=24"></script>
 </body>
 </html>
